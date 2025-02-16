@@ -5,7 +5,8 @@
 
 <div class="page-content py-3">
     <section class="row">
-       <div class="col-md-3 col-sm-6 col-lg-3">
+        <h2> এখানে ড্যাশবোর্ড সাজাবো।</h2>
+       {{-- <div class="col-md-3 col-sm-6 col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-aqua">
                 <i class="bi bi-boxes icon"></i>
@@ -25,7 +26,6 @@
                 <i class="bi bi-currency-dollar icon"></i>
                 </span>
                 <div class="info-box-content">
-                    {{-- <span class="text-bold text-uppercase">Total Collection</span> --}}
                     <span class="text-bold text-uppercase">Total Check Amount</span><br>
                     <span class="info-box-number">৳  {{ $checkbalance }}</span>
                 </div>
@@ -37,7 +37,6 @@
                 <i class="bi bi-cart icon"></i>
                 </span>
                 <div class="info-box-content">
-                    {{-- <span class="text-bold text-uppercase">Total Sales Amount</span> --}}
                     <span class="text-bold text-uppercase">Total Customer Due</span><br>
                     <span class="info-box-number">৳  {{ $customerDue }}</span>
                 </div>
@@ -49,7 +48,6 @@
                 <i class="bi bi-dash-square icon"></i>
                 </span>
                 <div class="info-box-content">
-                    {{-- <span class="text-bold text-uppercase">Total Expense Amount</span> --}}
                     <span class="text-bold text-uppercase">Total Undeliver</span>
                     <span class="info-box-number">{{ $total_undeliver_qty }}</span><br>
                     <span><b>DP</b> = {{round($totalUndQtyDpPrice)}} TK</span><br>
@@ -57,7 +55,7 @@
                     <span><b>TP-Free</b> = {{round($totalUndQtyTpFreePrice)}} TK</span>
                 </div>
             </div>
-       </div>
+       </div> --}}
        {{--  <div class="col-md-3 col-sm-6 col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-red">
@@ -190,7 +188,7 @@
             </div>
        </div> --}}
         <div class="col-lg-6 col-md-12 col-sm-12">
-            <div class="table-responsive info-box">
+            {{-- <div class="table-responsive info-box">
                 @php
                 $todayCollection = \App\Models\Settings\ShopBalance::where('status', 0)->whereDate('new_due_date', now()->toDateString())->get();
                 @endphp
@@ -198,7 +196,6 @@
                 <table class="table table-bordered mb-0">
                     <thead>
                         <tr>
-                            {{-- <th scope="col">{{__('#SL')}}</th> --}}
                             <th scope="col">{{__('Company Name')}}</th>
                             <th scope="col" class="text-end">{{__('Balance')}}</th>
                         </tr>
@@ -217,7 +214,7 @@
                         @endforelse
                     </tbody>
                 </table>
-            </div>
+            </div> --}}
             {{-- <div class="info-box p-3">
                 <h4 class="text-center bg-aqua text-white p-1">Company Balance</h4>
                 @foreach($suppliers as $data)
@@ -231,7 +228,7 @@
                 @endforeach
             </div> --}}
         </div>
-        <div class="col-lg-6 col-md-12 col-sm-12">
+        {{-- <div class="col-lg-6 col-md-12 col-sm-12">
             <div class="table-responsive info-box">
                 @php
                 $todayCollection = \App\Models\Settings\ShopBalance::where('status', 0)->whereDate('new_due_date', now()->toDateString())->get();
@@ -298,7 +295,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> --}}
     </section>
 </div>
 @endsection
