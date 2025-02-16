@@ -115,11 +115,11 @@
                 <div class="container">
                     <div class="footer clearfix mb-0 text-muted">
                         <div class="float-start">
-                            <p>&copy; Dealer</p>
+                            <p>&copy; মোসার্স হক পোল্ট্রি ফার্ম এন্ড ফিস ফিড</p>
                         </div>
                         <div class="float-end">
                             <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
-                                href="#">Muktodhara Technology LTD</a></p>
+                                href="https://profile-biplab.netlify.app/">Biplab Uddin</a></p>
                         </div>
                     </div>
                 </div>
@@ -180,7 +180,7 @@
                 // Add "active" class and style to the closest ul with class "submenu"
                 $(this).closest('.submenu-item').addClass('active');
                 $(this).closest('ul.submenu').addClass('active').css('display', 'block');
-                
+
                 // Add "active" class and style to the parent ul with class "submenu"
                 $(this).closest('ul.submenu').parents('ul.submenu').addClass('active').css('display', 'block');
             }
