@@ -30,7 +30,8 @@
 </head>
 <style>
     input,
-    select {
+    select,
+    textarea  {
         background-color: rgba(240, 233, 233, 0.76) !important;
     }
     ::placeholder{

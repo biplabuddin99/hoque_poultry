@@ -14,15 +14,15 @@
                             @csrf
                             @method('patch')
                             <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                {{-- <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="code">Customer Code<span class="text-danger">*</span></label>
                                         <input type="text" value="{{old('supplier_code',$customer->customer_code)}}" class="form-control" name="customer_code" required>
                                     </div>
-                                    {{-- @if($errors->has('name'))
+                                    @if($errors->has('name'))
                                         <span class="text-danger"> {{ $errors->first('name') }}</span>
-                                    @endif --}}
-                                </div>
+                                    @endif
+                                </div> --}}
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="name">Customer Name<span class="text-danger">*</span></label>
@@ -41,7 +41,7 @@
                                         <input type="email" value="{{old('email',$customer->email)}}" class="form-control" name="email">
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                {{-- <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="country">Country</label>
                                         <input type="text" value="{{old('country',$customer->country)}}" class="form-control" name="country">
@@ -52,7 +52,7 @@
                                         <label for="city">City</label>
                                         <input type="text" value="{{old('city',$customer->city)}}" class="form-control" name="city">
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="address">Address</label>

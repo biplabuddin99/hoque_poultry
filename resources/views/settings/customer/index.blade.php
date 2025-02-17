@@ -15,14 +15,15 @@
                                     <input type="text" name="name" value="{{isset($_GET['name'])?$_GET['name']:''}}" placeholder="Name" class="form-control">
                                 </div>
                                 <div class="col-4">
-                                    <input type="text" name="customer_code" value="{{isset($_GET['customer_code'])?$_GET['customer_code']:''}}" placeholder="Customer Code" class="form-control">
+                                    <input type="text" name="contact" value="{{isset($_GET['contact'])?$_GET['contact']:''}}" placeholder="Phone No" class="form-control">
                                 </div>
-
-                                <div class="col-2 ps-0">
-                                    <button class="btn btn-sm btn-info float-end" type="submit">Search</button>
-                                </div>
-                                <div class="col-2 p-0 m-0">
-                                    <a class="btn btn-sm btn-warning ms-2" href="{{route(currentUser().'.customer.index')}}" title="Clear">Clear</a>
+                                <div class="col-4 pe-1 d-flex">
+                                    <div class="col-2 ps-0">
+                                        <button class="btn btn-sm btn-info float-end" type="submit">Search</button>
+                                    </div>
+                                    <div class="col-2 p-0 m-0">
+                                        <a class="btn btn-sm btn-warning ms-2" href="{{route(currentUser().'.customer.index')}}" title="Clear">Clear</a>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -39,12 +40,12 @@
                         <thead>
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
-                                <th scope="col">{{__('Customer Code')}}</th>
+                                {{-- <th scope="col">{{__('Customer Code')}}</th> --}}
                                 <th scope="col">{{__('Name')}}</th>
                                 <th scope="col">{{__('Contact')}}</th>
                                 <th scope="col">{{__('Email')}}</th>
-                                <th scope="col">{{__('Country')}}</th>
-                                <th scope="col">{{__('City')}}</th>
+                                {{-- <th scope="col">{{__('Country')}}</th> --}}
+                                {{-- <th scope="col">{{__('City')}}</th> --}}
                                 <th scope="col">{{__('Balance')}}</th>
                                 <th scope="col">{{__('Address')}}</th>
                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
@@ -54,12 +55,12 @@
                             @forelse($customers as $data)
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
-                                <td>{{$data->customer_code}}</td>
+                                {{-- <td>{{$data->customer_code}}</td> --}}
                                 <td>{{$data->name}}</td>
                                 <td>{{$data->contact}}</td>
                                 <td>{{$data->email}}</td>
-                                <td>{{$data->country}}</td>
-                                <td>{{$data->city}}</td>
+                                {{-- <td>{{$data->country}}</td> --}}
+                                {{-- <td>{{$data->city}}</td> --}}
                                 <td>{{$data->balances?->sum('balance_amount')}}</td>
                                 <td>{{$data->address}}</td>
                                 <td class="white-space-nowrap">
