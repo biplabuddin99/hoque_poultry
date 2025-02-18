@@ -13,7 +13,7 @@
                             <form class="form" method="post" enctype="multipart/form-data" action="{{route(currentUser().'.product.store')}}">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                    {{-- <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label class="" for="cat">{{__('Distributor')}}</label>
                                             @if($user)
@@ -26,7 +26,7 @@
                                             </select>
                                             @else
                                                 <select class="form-select distributor_id" name="distributor_id" onchange="getBalance()" required>
-                                                    {{--  <option value="">Select Distributor</option>  --}}
+                                                     <option value="">Select Distributor</option>
                                                     @forelse (App\Models\Settings\Supplier::where(company())->orderBy('id', 'desc')->get() as $sup)
                                                         <option value="{{ $sup->id }}">{{ $sup->name }}</option>
                                                     @empty
@@ -35,14 +35,14 @@
                                                 </select>
                                             @endif
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="product_name">{{__('Product Name')}}</label>
                                             <input type="text" class="form-control" value="{{ old('product_name')}}" name="product_name">
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                    {{-- <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="group_id">{{__('Group')}}<span class="text-danger">*</span></label>
                                             <select required name="group_id" class="select2 form-control form-select" >
@@ -54,21 +54,8 @@
                                                 @endforelse
                                             </select>
                                         </div>
-                                    </div>
-                                    {{--  <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="category_id">{{__('Category')}}<span class="text-danger">*</span></label>
-                                            <select required name="category_id" class="form-control form-select" >
-                                                <option value="">Select</option>
-                                                @forelse($category as $d)
-                                                    <option value="{{$d->id}}" {{ old('category_id')==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                                @empty
-                                                    <option value="">No data found</option>
-                                                @endforelse
-                                            </select>
-                                        </div>
-                                    </div>  --}}
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                    </div> --}}
+                                    {{-- <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="unit_style_id">{{__('Unit Style')}}</label>
                                             <select onchange="tpFree(this)" name="unit_style_id" class="select2 form-control form-select unit_style_id" required>
@@ -99,15 +86,15 @@
                                             <input type="number" min="0" step="0.01" class="form-control" value="{{ old('dp_price')}}" name="dp_price">
 
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="tp_price">{{__('TP Price(PCS)')}}</label>
-                                            <input type="number" placeholder="Tp Price Pcs" min="0" step="0.01" onkeyup="tpFree(this)" class="form-control tp_price" value="{{ old('tp_price')}}" name="tp_price">
+                                            <label for="tp_price">{{__(' Price')}}</label>
+                                            <input type="number" placeholder="Price" min="0" step="0.01" onkeyup="tpFree(this)" class="form-control tp_price" value="{{ old('tp_price')}}" name="tp_price">
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                    {{-- <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="tp_free">{{__('TP Free(PCS)')}}</label>
                                             <input type="text" readonly class="form-control tp_free" value="{{ old('tp_free')}}" name="tp_free">
@@ -131,7 +118,7 @@
                                             <label for="adjust">{{__('Adjust')}}</label>
                                             <input type="text" onkeyup="Adjust(this)" class="form-control adjust" value="0" name="adjust">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     {{--  <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="base_unit">{{__('Unit')}}</label>

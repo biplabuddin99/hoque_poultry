@@ -53,7 +53,9 @@
         </a>
         <ul class="submenu">
             <li class="py-1 submenu-item"><a href="{{route(currentUser().'.customer.index')}}">{{__('Customers')}}</a></li>
+            <li class="py-1 submenu-item"><a href="{{route(currentUser().'.product.index')}}" >{{__('Product')}}</a></li>
             {{-- <li class="py-1 submenu-item"><a href="{{route(currentUser().'.sales.create')}}" >{{__('New Sales')}}</a></li> --}}
+            <li class="py-1 submenu-item"><a href="{{route(currentUser().'.sales.create')}}" >{{__('New Sales')}}</a></li>
             {{-- <li class="py-1 submenu-item"><a href="{{route(currentUser().'.sales.index')}}" >{{__('Sales List')}}</a></li> --}}
             {{-- <li class="py-1 submenu-item"><a href="{{route(currentUser().'.selectedCreate')}}" >{{__('New Sales')}}</a></li> --}}
             {{-- <li class="py-1 submenu-item"><a href="{{route(currentUser().'.selectedIndex')}}" >{{__('Sales List')}}</a></li> --}}

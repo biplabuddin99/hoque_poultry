@@ -14,11 +14,11 @@
                                 @csrf
                                 @method('PATCH')
                                 <div class="row">
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                    {{-- <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label class="" for="cat">{{__('Distributor')}}</label>
                                             <select class="choices form-select distributor_id" name="distributor_id">
-                                                {{--  <option value="">Select Distributor</option>  --}}
+                                                 <option value="">Select Distributor</option>
                                                 @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
                                                     <option value="{{ $sup->id }}" {{ $product->distributor_id==$sup->id?'selected':'' }}>{{ $sup->name }}</option>
                                                 @empty
@@ -26,14 +26,14 @@
                                                 @endforelse
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="product_name">{{__('Product Name')}}</label>
                                             <input type="text" class="form-control" value="{{ old('product_name',$product->product_name)}}" name="product_name">
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                    {{-- <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="group_id">{{__('Group')}}<span class="text-danger">*</span></label>
                                             <select required name="group_id" class="select2 form-control form-select" >
@@ -46,19 +46,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    {{--  <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="category_id">{{__('Category')}}<span class="text-danger">*</span></label>
-                                            <select required name="category_id" class="form-control form-select" >
-                                                <option value="">Select</option>
-                                                @forelse($category as $d)
-                                                    <option value="{{$d->id}}" {{ $product->category_id==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                                @empty
-                                                    <option value="">No data found</option>
-                                                @endforelse
-                                            </select>
-                                        </div>
-                                    </div>  --}}
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="unit_style_id">{{__('Unit Style')}}</label>
@@ -90,23 +77,22 @@
                                             <input type="number" min="0" step="0.01" class="form-control" value="{{ old('dp_price',$product->dp_price)}}" name="dp_price">
 
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="tp_price">{{__('TP Price')}}</label>
                                             <input type="number" min="0" step="0.01" onkeyup="tpFree(this)" class="form-control tp_price" value="{{ old('tp_price',$product->tp_price)}}" name="tp_price">
-
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                    {{-- <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="tp_free">{{__('TP Free')}}</label>
                                             <input type="text"  class="form-control tp_free" value="{{ old('tp_free',$product->tp_free)}}" name="tp_free">
                                             <input type="hidden" class="form-control tp_free_up" value="{{$product->tp_free - $product->adjust}}" name="">
                                             <span class="tp_free_span mt-3" style="display: none">{{ $product->tp_free }}</span>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                    </div> --}}
+                                    {{-- <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="mrp_price">{{__('MRP Price')}}</label>
                                             <input type="number" class="form-control" value="{{ old('mrp_price',$product->mrp_price)}}" name="mrp_price">
@@ -124,7 +110,7 @@
                                             <label for="adjust">{{__('Adjust')}}</label>
                                             <input type="text" onkeyup="Adjust(this)" class="form-control adjust" value="{{ old('adjust',$product->adjust)}}" name="adjust">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     {{--  <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="base_unit">{{__('Unit')}}</label>

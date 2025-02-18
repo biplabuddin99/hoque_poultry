@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="row pb-1">
                     <div class="col-10">
-                        <form action="" method="get">
+                        {{-- <form action="" method="get">
                             <div class="row">
                                 <div class="col-4 py-1">
                                     <label for="groups">{{__('Group')}}</label>
@@ -40,7 +40,7 @@
                                     <a class="btn btn-sm btn-warning " href="{{route(currentUser().'.product.index')}}" title="Clear">Clear</a>
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
                     </div>
                     <div class="col-2">
                     </div>
@@ -52,13 +52,13 @@
                         <thead>
                             <tr class="bg-primary text-white">
                                 <th scope="col">{{__('#SL')}}</th>
-                                <th scope="col">{{__('Group')}}</th>
+                                {{-- <th scope="col">{{__('Group')}}</th> --}}
                                 {{--  <th scope="col">{{__('Category')}}</th>  --}}
                                 <th scope="col">{{__('Name')}}</th>
-                                <th scope="col">{{__('DP Price')}}</th>
+                                {{-- <th scope="col">{{__('DP Price')}}</th> --}}
                                 <th scope="col">{{__('TP Price')}}</th>
-                                <th scope="col">{{__('MRP Price')}}</th>
-                                <th scope="col">{{__('Distributor')}}</th>
+                                {{-- <th scope="col">{{__('MRP Price')}}</th> --}}
+                                {{-- <th scope="col">{{__('Distributor')}}</th> --}}
                                 {{--  <th scope="col">{{__('Unit')}}</th>  --}}
                                 {{--  <th scope="col">{{__('Image')}}</th>  --}}
                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
@@ -68,13 +68,13 @@
                             @forelse($product as $key=>$p)
                             <tr>
                             <th scope="row">{{ $product->firstItem() + $key }}</th>
-                                <td>{{$p->group?->name}}</td>
+                                {{-- <td>{{$p->group?->name}}</td> --}}
                                 {{--  <td>{{$p->category?->name}}</td>  --}}
                                 <td>{{$p->product_name}}</td>
-                                <td>{{$p->dp_price}}</td>
+                                {{-- <td>{{$p->dp_price}}</td> --}}
                                 <td>{{$p->tp_price}}</td>
-                                <td>{{$p->mrp_price}}</td>
-                                <td>{{$p->distributor?->name}}</td>
+                                {{-- <td>{{$p->mrp_price}}</td> --}}
+                                {{-- <td>{{$p->distributor?->name}}</td> --}}
                                 {{--  <td>{{$p->unit?->name}}</td>  --}}
                                 {{--  <td><img width="50px" src="{{asset('uploads/product_img/'.company()['company_id'].'/'.$p->image)}}" alt=""></td>  --}}
                                 <td class="white-space-nowrap">
