@@ -101,8 +101,14 @@ Route::group(['middleware'=>isOwner::class],function(){
     Route::prefix('owner')->group(function(){
         Route::get('/dashboard', [dash::class,'ownerDashboard'])->name('owner.dashboard');
 
+        //hoque paultry all route
+                Route::resource('company',company::class,['as'=>'owner']);
+                Route::resource('customer',customer::class,['as'=>'owner']);
+                Route::resource('shop',shop::class,['as'=>'owner']);
+                Route::resource('sales',sales::class,['as'=>'owner']);
+
         // settings
-        Route::resource('company',company::class,['as'=>'owner']);
+        // Route::resource('company',company::class,['as'=>'owner']);
         Route::resource('area',area::class,['as'=>'owner']);
         Route::resource('unitstyle',unitstyle::class,['as'=>'owner']);
         Route::resource('unit',unit::class,['as'=>'owner']);
@@ -110,8 +116,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::resource('bill',bill::class,['as'=>'owner']);
         Route::resource('users',user::class,['as'=>'owner']);
         Route::resource('supplier',supplier::class,['as'=>'owner']);
-        Route::resource('customer',customer::class,['as'=>'owner']);
-        Route::resource('shop',shop::class,['as'=>'owner']);
+
         Route::resource('shopbalance',shopbalance::class,['as'=>'owner']);
         Route::post('collection-by-update',[shopbalance::class,'collectionByUpdate'])->name('owner.collection_by_update');
         Route::get('collect-index',[shopbalance::class,'collectIndex'])->name('owner.collect_index');
@@ -120,7 +125,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::post('/supplier/balance', [supplier::class, 'supplierBalance'])->name('owner.supplier.balance');
 
         //sales
-        Route::resource('sales',sales::class,['as'=>'owner']);
+
         Route::get('selected-sales-index',[sales::class,'selectedIndex'])->name('owner.selectedIndex');
         Route::get('selected-sales-get',[sales::class,'selectedCreate'])->name('owner.selectedCreate');
         Route::get('selected-sales-edit/{id}',[sales::class,'selectedEdit'])->name('owner.selectedEdit');
@@ -129,7 +134,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::post('sales-primary-store/{id}',[sales::class,'primaryStore'])->name('owner.sales.primaryStore');
         Route::get('sales-receive-screen/{id}',[sales::class,'salesReceiveScreen'])->name('owner.sales.receiveScreen');
         Route::get('selected-receive-screen/{id}',[sales::class,'selectedReceiveScreen'])->name('owner.sales.selectedReceiveScreen');
-        
+
 
 
         Route::get('sales-print-page/{id}',[sales::class,'printSalesClosing'])->name('owner.sales.printpage');
@@ -145,7 +150,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::get('salesClosing-list',[sales::class,'salesClosingList'])->name('owner.salesClosingList');
         Route::post('salesclosing-data-get',[sales::class,'getSalesClosingData'])->name('owner.getSalesClosingData');
         Route::get('delivery-invoice/{id}',[sales::class,'deliveryInvoice'])->name('owner.delivery_invoice');
-        
+
         //checklist
         Route::get('check-list',[sales::class,'getCheckList'])->name('owner.check_list');
         Route::get('check-list-bank',[sales::class,'getCheckBankList'])->name('owner.check_list_bank');
@@ -207,7 +212,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::get('/shop-balance-history/{id}',[report::class,'ShopBalanceHistory'])->name('owner.shop_balance_history');
 
         Route::get('/shop-balance-history-two/{id}',[report::class,'ShopBalanceHistoryTwo'])->name('owner.shop_balance_history_two');
-        
+
         Route::get('undeliverd-report', [report::class,'undeliverdProduct'])->name('owner.undeliverd');
         Route::get('/sr-report',[report::class,'SRreport'])->name('owner.srreport');
         Route::get('/sr-report-product',[report::class,'srreportProduct'])->name('owner.srreportProduct');

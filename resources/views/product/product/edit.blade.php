@@ -80,10 +80,16 @@
                                     </div> --}}
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="tp_price">{{__('TP Price')}}</label>
-                                            <input type="number" min="0" step="0.01" onkeyup="tpFree(this)" class="form-control tp_price" value="{{ old('tp_price',$product->tp_price)}}" name="tp_price">
+                                            <label for="tp_price">{{__('Price')}}</label>
+                                            <input type="number" min="0" step="0.01" class="form-control tp_price" value="{{ old('tp_price',$product->tp_price)}}" name="tp_price">
                                         </div>
                                     </div>
+                                    {{-- <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="tp_price">{{__('Price')}}</label>
+                                            <input type="number" min="0" step="0.01" onkeyup="tpFree(this)" class="form-control tp_price" value="{{ old('tp_price',$product->tp_price)}}" name="tp_price">
+                                        </div>
+                                    </div> --}}
                                     {{-- <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="tp_free">{{__('TP Free')}}</label>

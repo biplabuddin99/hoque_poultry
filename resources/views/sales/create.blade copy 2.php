@@ -34,28 +34,94 @@
                             @csrf
                             <div class="row p-2 mt-4">
                                 <input type="hidden" name="sales_type" value="0">
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="form-group">
-                                        <label for=""><b>Sales Date</b></label>
-                                        <input type="text" id="datepicker" class="form-control" value="<?php print(date("m/d/Y")); ?>"  name="sales_date" placeholder="mm-dd-yyyy">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="form-group">
-                                        <label for=""><b>product</b></label>
-                                        <select class="form-control form-select product_id" id="product_id" name="product_id" onchange="productData(this);">
-                                            <option value="">Select Product</option>
-                                            @forelse ($product as $p)
-                                            <option value="{{$p->id}}" {{ request('product_id')==$p->id?"selected":""}}>{{$p->product_name}}</option>
+                                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                                    <label for="cat">{{__('Distributor')}}<span class="text-danger">*</span></label>
+                                    @if($user)
+                                        <select class="form-select supplier_id" name="distributor_id" onchange="getProduct();">
+                                            @forelse (App\Models\Settings\Supplier::where(company())->where('id',$user->distributor_id)->get() as $sup)
+                                                <option value="{{ $sup->id }}">{{ $sup->name }}</option>
                                             @empty
                                                 <option value="">No Data Found</option>
                                             @endforelse
-
                                         </select>
-                                    </div>
+                                    @else
+                                        <select class="form-select supplier_id" name="distributor_id" onchange="getProduct();">
+                                            <option value="">Select Distributor</option>
+                                            @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
+                                                <option value="{{ $sup->id }}">{{ $sup->name }}</option>
+                                            @empty
+                                                <option value="">No Data Found</option>
+                                            @endforelse
+                                        </select>
+                                    @endif
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="form-group">
+                                
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>Shop/Dsr</b></label>
+                                    <select class="form-select" onclick="getShopDsr()" name="select_shop_dsr">
+                                        <option value="">Select</option>
+                                        <option value="shop">Shop</option>
+                                        <option value="dsr">DSR</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-3 mt-2" id="shopNameContainer" style="display: none;">
+                                    <label for=""><b>Shop Name</b></label>
+                                    <select class="select2 form-select shop_id" name="shop_id" id="shop_deselect">
+                                        <option value="">Select shop</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-3 mt-2" id="dsrNameContainer" style="display: none;">
+                                    <label for=""><b>DSR Name</b></label>
+                                    <select class="select2 form-select dsr_id" name="dsr_id" id="dsr_deselect">
+                                        <option value="">Select dsr</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>SR</b></label>
+                                    <select name="sr_id" class="select2 form-select"  id="sruser_id">
+                                        <option value="">Select sr</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>Sales Date</b></label>
+                                    <input type="text" id="datepicker" class="form-control" value="<?php print(date("m/d/Y")); ?>"  name="sales_date" placeholder="mm-dd-yyyy">
+                                </div>
+                            </div>
+                            <!-- table bordered -->
+                            <div class="row p-2 mt-4">
+                                <div class="table-responsive d-none show_click">
+                                    <table class="table table-bordered mb-0 table-striped">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <th scope="col" width="30%">{{__('Product Name')}}</th>
+                                                <th scope="col">{{__('CTN')}}</th>
+                                                <th scope="col">{{__('PCS')}}</th>
+                                                <th scope="col">{{__('Tp/Tpfree')}}</th>
+                                                <th scope="col">{{__('CTN Price')}}</th>
+                                                <th scope="col">{{__('PCS Price')}}</th>
+                                                <th scope="col">{{__('Sub-Total')}}</th>
+                                                <th scope="col">{{__('Stock(QTY)')}}</th>
+                                                {{--  <th class="white-space-nowrap">{{__('ACTION')}}</th>  --}}
+                                            </tr>
+                                        </thead>
+                                        {{--  @php
+                                            $showqty =\App\Models\Stock\Stock::whereIn('status', [1, 2, 3])->sum('totalquantity_pcs') - \App\Models\Stock\Stock::whereIn('status', [0, 4, 5])->sum('totalquantity_pcs');
+                                        @endphp  --}}
+                                        <tbody id="sales_repeat" class="sales_repeat">
+                                        </tbody>
+                                    </table>
+                                    <div class="row mb-1">
+                                        <div class="col-lg-3"></div>
+                                        <div class="col-lg-5 mt-2 text-end">
+                                            <label for="" class="form-group"><h4>Total</h4></label>
+                                        </div>
+                                        <div class="col-lg-2 mt-2 text-end" style="margin-left: 3rem!important;">
+                                            <label for="" class="form-group"><h5 class="total">0.00</h5></label>
+                                            <input type="hidden" name="total" class="total_p">
+                                        </div>
+                                        <div class="col-lg-3"></div>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +246,7 @@ $(document).ready(function() {
         let productId = $(e).find('.modalProductId').val();
         let rowID = $(e).find('.rowID').val();
         let currentRow = $('.product_id[value="' + productId + '"]').closest('tr');
-
+        
         $.ajax({
             url: '{{ route('owner.update_product_price') }}', // Corrected this line
             method: 'POST',
@@ -320,6 +386,109 @@ $(document).ready(function() {
 
 
 <script>
+    function getShopDsr() {
+        var selectedOption = document.querySelector('select[name="select_shop_dsr"]').value;
+
+        var shopNameContainer = document.getElementById("shopNameContainer");
+        var shopDropdown = document.querySelector('select[name="shop_id"]');
+        var dsrNameContainer = document.getElementById("dsrNameContainer");
+        var dsrDropdown = document.querySelector('select[name="dsr_id"]');
+
+        if (selectedOption === "shop") {
+            shopNameContainer.style.display = "block";
+            dsrNameContainer.style.display = "none";
+            dsrDropdown.value = "";
+            //getShopData();
+        } else if (selectedOption === "dsr") {
+            shopNameContainer.style.display = "none";
+            dsrNameContainer.style.display = "block";
+            shopDropdown.value = "";
+            //getDsrData();
+        } else {
+            shopNameContainer.style.display = "none";
+            dsrNameContainer.style.display = "none";
+        }
+    }
+    function getShopData() {
+        let supplier_id=$('.supplier_id').val();
+        $.ajax({
+            url: "{{ route(currentUser().'.get_shop') }}",
+            type: "GET",
+            dataType: "json",
+            data:{supplier_id:supplier_id},
+            success: function(data) {
+                //console.log(data);
+                let optShop = `<option value="">Select Shop</option>`;
+                let optDsr = `<option value="">Select Dsr</option>`;
+                let optSr = `<option value="">Select Sr</option>`;
+                if(data.length > 0){
+                    data.forEach(item => {
+                        item.shop.forEach(shop => {
+                            optShop += `<option value="${shop.id}">${shop.shop_name}(${shop.area_name})</option>`;
+                        });
+                    });
+                }
+                if(data.length > 0){
+                    data.forEach(item => {
+                        item.dsr.forEach(dsr => {
+                            optDsr += `<option value="${dsr.id}">${dsr.name}</option>`;
+                        });
+                    });
+                }
+                if(data.length > 0){
+                    data.forEach(item => {
+                        item.sr.forEach(sr => {
+                            optSr += `<option value="${sr.id}">${sr.name}</option>`;
+                        });
+                    });
+                }
+                $('#shop_deselect').html(optShop);
+                $('#dsr_deselect').html(optDsr);
+                $('#sruser_id').html(optSr);
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
+
+    // function getDsrData() {
+    //     $.ajax({
+    //         url: "{{ route(currentUser().'.get_dsr') }}",
+    //         type: "GET",
+    //         dataType: "json",
+    //         success: function(data) {
+    //             populateDsrOptions(data);
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.log("Error: " + error);
+    //         }
+    //     });
+    // }
+
+    // function populateShopOptions(data) {
+    //     var selectElement = document.querySelector('select[name="shop_id"]');
+    //     selectElement.innerHTML = "";
+
+    //     data.forEach(function(item) {
+    //         var option = document.createElement("option");
+    //         option.value = item.id;
+    //         option.textContent = item.shop_name;
+    //         selectElement.appendChild(option);
+    //     });
+    // }
+
+    // function populateDsrOptions(data) {
+    //     var selectElement = document.querySelector('select[name="dsr_id"]');
+    //     selectElement.innerHTML = "";
+
+    //     data.forEach(function(item) {
+    //         var option = document.createElement("option");
+    //         option.value = item.id;
+    //         option.textContent = item.name;
+    //         selectElement.appendChild(option);
+    //     });
+    // }
 
 $(document).ready(function() {
     // Event listener for save changes button in modal
@@ -337,7 +506,7 @@ $(document).ready(function() {
             success: function(response) {
                 // Update TP Price in the table row
                 currentRow.find('.form-control[name="ctn_price[]"]').val(updatedTpPrice);
-
+                
                 // Close modal
                 $('#exampleModal').modal('hide');
             },

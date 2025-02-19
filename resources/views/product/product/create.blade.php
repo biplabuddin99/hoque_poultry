@@ -90,10 +90,17 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="tp_price">{{__(' Price')}}</label>
-                                            <input type="number" placeholder="Price" min="0" step="0.01" onkeyup="tpFree(this)" class="form-control tp_price" value="{{ old('tp_price')}}" name="tp_price">
+                                            <input type="number" placeholder="Price" min="0" step="0.01" class="form-control tp_price" value="{{ old('tp_price')}}" name="tp_price">
 
                                         </div>
                                     </div>
+                                    {{-- <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="tp_price">{{__(' Price')}}</label>
+                                            <input type="number" placeholder="Price" min="0" step="0.01" onkeyup="tpFree(this)" class="form-control tp_price" value="{{ old('tp_price')}}" name="tp_price">
+
+                                        </div>
+                                    </div> --}}
                                     {{-- <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="tp_free">{{__('TP Free(PCS)')}}</label>

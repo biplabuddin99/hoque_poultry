@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle','Shop List')
+@section('pageTitle','দোকানের তালিকা')
 @section('pageSubTitle','List')
 
 @section('content')
@@ -23,16 +23,21 @@
                             <div class="row">
                                 <div class="col-lg-2 col-sm-6">
                                     <div class="form-group">
-                                        <input type="text" name="shop_name" value="{{isset($_GET['shop_name'])?$_GET['shop_name']:''}}" placeholder="Shop Name" class="form-control">
+                                        <input type="text" name="shop_name" value="{{isset($_GET['shop_name'])?$_GET['shop_name']:''}}" placeholder="দোকান নাম" class="form-control">
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-2 col-sm-6">
                                     <div class="form-group">
-                                        <input type="text" name="owner_name" value="{{isset($_GET['owner_name'])?$_GET['owner_name']:''}}" placeholder="Owner Name" class="form-control">
+                                        <input type="text" name="owner_name" value="{{isset($_GET['owner_name'])?$_GET['owner_name']:''}}" placeholder="মালিক নাম" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" name="contact_no" value="{{isset($_GET['contact_no'])?$_GET['contact_no']:''}}" placeholder="মোবাইল" class="form-control">
+                                    </div>
+                                </div>
+                                {{-- <div class="col-lg-2 col-sm-6">
                                     <div class="form-group">
                                         <select name="distributor_id" class="select2 form-select">
                                             <option value="">Select Distributor</option>
@@ -63,7 +68,7 @@
                                             <option value="{{ $a->id }}">{{ $a->name }}</option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-lg-2 col-sm-6 ps-0 ">
                                     <div class="form-group d-flex">
@@ -88,36 +93,36 @@
                         <thead>
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
-                                <th scope="col">{{__('Shop Name')}}</th>
-                                <th scope="col">{{__('Distributor')}}</th>
-                                <th scope="col">{{__('SR')}}</th>
-                                <th scope="col">{{__('Owner Name')}}</th>
-                                <th scope="col">{{__('Contact')}}</th>
-                                <th scope="col">{{__('DSR')}}</th>
-                                <th scope="col">{{__('Area Name')}}</th>
-                                <th scope="col">{{__('Receivable')}}</th>
-                                <th scope="col">{{__('Address')}}</th>
+                                <th scope="col">{{__('দোকান নাম')}}</th>
+                                {{-- <th scope="col">{{__('Distributor')}}</th> --}}
+                                {{-- <th scope="col">{{__('SR')}}</th> --}}
+                                <th scope="col">{{__('মালিক নাম')}}</th>
+                                <th scope="col">{{__('মোবাইল')}}</th>
+                                {{-- <th scope="col">{{__('DSR')}}</th> --}}
+                                {{-- <th scope="col">{{__('Area Name')}}</th> --}}
+                                <th scope="col">{{__('পাওনা')}}</th>
+                                <th scope="col">{{__('ঠিকানা')}}</th>
                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($shop as $data)
                             {{-- @php $shopbalance=($data->shopBalances?->where('status',0)->sum('balance_amount') + $data->shopBalances?->where('status',1)->where('check_type',1)->sum('balance_amount')) - ($data->shopBalances?->where('status',1)->sum('balance_amount') + $data->shopBalances?->where('status',0)->sum('collect_amount')) @endphp --}}
-                            @php 
-                                $oldDue=$data->shopBalances?->where('status',1)->sum('balance_amount'); 
+                            @php
+                                $oldDue=$data->shopBalances?->where('status',1)->sum('balance_amount');
                                 $collectInCash=$data->shopBalances?->where('status',0)->sum('collect_amount');
                                 $collectInCheck=$data->shopBalances?->where('status',0)->sum('check_collect_amount');
-                                $shopbalance=($data->shopBalances?->where('status',0)->sum('balance_amount') - ($oldDue + $collectInCash + $collectInCheck)); 
+                                $shopbalance=($data->shopBalances?->where('status',0)->sum('balance_amount') - ($oldDue + $collectInCash + $collectInCheck));
                             @endphp
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$data->shop_name}}</td>
-                                <td>{{$data->distributor?->name}}</td>
-                                <td>{{$data->sr?->name}}</td>
+                                {{-- <td>{{$data->distributor?->name}}</td> --}}
+                                {{-- <td>{{$data->sr?->name}}</td> --}}
                                 <td>{{$data->owner_name}}</td>
                                 <td>{{$data->contact}}</td>
-                                <td>{{$data->dsr?->name}}</td>
-                                <td>{{$data->area?->name}}</td>
+                                {{-- <td>{{$data->dsr?->name}}</td> --}}
+                                {{-- <td>{{$data->area?->name}}</td> --}}
                                 <td>{{ $shopbalance }}</td>
                                 <td>{{$data->address}}</td>
                                 <td class="white-space-nowrap">

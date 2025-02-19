@@ -14,7 +14,7 @@
                             @csrf
                             @method('patch')
                             <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                {{-- <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="sup_id">Distributor<span class="text-danger">*</span></label>
                                         <select class="form-select border border-primary" name="sup_id" onchange="srShow();" required>
@@ -37,7 +37,7 @@
                                             @endforelse
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="shop_name">Shop Name<span class="text-danger">*</span></label>
@@ -83,10 +83,9 @@
                                         <textarea class="form-control border border-primary" name="address" rows="2">{{old('address',$shop->address)}}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                {{-- <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="area_name">Area Name</label>
-                                        {{-- <textarea class="form-control border border-primary" name="area_name" rows="2">{{old('area_name',$shop->area_name)}}</textarea> --}}
                                         <select name="area_name" class="form-control form-select" id="area_id">
                                             <option value="">Select area</option>
                                             @foreach ($area as $a)
@@ -94,7 +93,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-info me-1 mb-1">Update</button>
@@ -119,7 +118,7 @@
         old_supplier_id = document.querySelector('select[name="sup_id"]').value;
         srShow();
     };
-   
+
    function srShow(){
         let supplier = document.querySelector('select[name="sup_id"]').value;
          $('.selecet_hide').hide();
@@ -130,6 +129,6 @@
              old_supplier_id=supplier;
          }
     }
-    
+
 </script>
 @endpush

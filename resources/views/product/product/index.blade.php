@@ -56,7 +56,7 @@
                                 {{--  <th scope="col">{{__('Category')}}</th>  --}}
                                 <th scope="col">{{__('Name')}}</th>
                                 {{-- <th scope="col">{{__('DP Price')}}</th> --}}
-                                <th scope="col">{{__('TP Price')}}</th>
+                                <th scope="col">{{__('Price')}}</th>
                                 {{-- <th scope="col">{{__('MRP Price')}}</th> --}}
                                 {{-- <th scope="col">{{__('Distributor')}}</th> --}}
                                 {{--  <th scope="col">{{__('Unit')}}</th>  --}}

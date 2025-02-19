@@ -11,7 +11,7 @@
                         <form class="form" method="post" action="{{route(currentUser().'.shop.store')}}">
                             @csrf
                             <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                {{-- <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="sup_id">Distributor<span class="text-danger">*</span></label>
                                         <select class="form-select border border-primary" name="sup_id" onchange="srShow(this.value);" required>
@@ -34,7 +34,7 @@
                                             @endforelse
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="shop_name">Shop Name<span class="text-danger">*</span></label>
@@ -77,10 +77,9 @@
                                         <textarea class="form-control border border-primary" name="address" rows="2">{{old('address')}}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                {{-- <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="area_name">Area Name</label>
-                                        {{-- <textarea class="form-control border border-primary" name="area_name" rows="2">{{old('area_name')}}</textarea> --}}
                                         <select name="area_name" class="form-control form-select" id="area_id">
                                             <option value="">Select area</option>
                                             @foreach ($area as $a)
@@ -88,7 +87,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Save</button>

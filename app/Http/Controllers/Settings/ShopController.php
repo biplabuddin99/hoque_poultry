@@ -32,12 +32,12 @@ class ShopController extends Controller
             $shop=$shop->where('shop_name','like','%'.$request->shop_name.'%');
         if($request->owner_name)
             $shop=$shop->where('owner_name','like','%'.$request->owner_name.'%');
-        if ($request->distributor_id)
-            $shop->where('shops.sup_id',$request->distributor_id);
-        if ($request->area)
-            $shop->where('shops.area_name',$request->area);
-        if ($request->sr_id)
-            $shop->where('shops.sr_id',$request->sr_id);
+        if ($request->contact_no)
+            $shop->where('contact',$request->contact_no);
+        // if ($request->area)
+        //     $shop->where('shops.area_name',$request->area);
+        // if ($request->sr_id)
+        //     $shop->where('shops.sr_id',$request->sr_id);
 
         $shop=$shop->paginate(20);
 

@@ -69,10 +69,10 @@ class SalesController extends Controller
         return view('sales.selectedIndex',compact('sales','userSr','sr','distributors'));
     }
 
-    
 
 
-    
+
+
     public function salesClosingList(Request $request)
     {
         $distributors = Supplier::where(company())->select('id','name')->get();
@@ -106,8 +106,18 @@ class SalesController extends Controller
         $area_name = Shop::select('area_name')->groupBy('area_name')->get();
         $shops = Shop::all();
         $userDsr=User::where(company())->where('role_id',4)->get();
-        return view('sales.create',compact('user','userSr','shops','area_name','userDsr'));
+        $product = Product::where(company())->get();
+        return view('sales.create',compact('user','userSr','shops','area_name','userDsr','product'));
     }
+    // public function create()
+    // {
+    //     $user=User::where('id',currentUserId())->where('role_id',3)->select('distributor_id')->first();
+    //     $userSr=User::where(company())->where('role_id',5)->get();
+    //     $area_name = Shop::select('area_name')->groupBy('area_name')->get();
+    //     $shops = Shop::all();
+    //     $userDsr=User::where(company())->where('role_id',4)->get();
+    //     return view('sales.create',compact('user','userSr','shops','area_name','userDsr'));
+    // }
     public function selectedCreate()
     {
         $user=User::where('id',currentUserId())->where('role_id',3)->select('distributor_id')->first();
@@ -718,7 +728,7 @@ class SalesController extends Controller
                                 $pay->sr_id = $request->sr_id;
                                 $pay->check_type=1;
                                 $pay->cash_type=1;
-                                $pay->status=0; 
+                                $pay->status=0;
                                 $pay->save();
                             }
                         }
@@ -729,7 +739,7 @@ class SalesController extends Controller
             }else{
                 Toastr::error('Sales not generated before sales closing!');
             }
-            
+
             return redirect(route(currentUser().'.sales.printpage',encryptor('encrypt',$sales->id)));
         }
         catch (Exception $e){
