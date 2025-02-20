@@ -40,18 +40,18 @@
                                 </div> --}}
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
+                                        <label for="owner_name">মালিক নাম<span class="text-danger">*</span></label>
+                                        <input type="text" value="{{old('owner_name',$shop->owner_name)}}" class="form-control border border-primary" name="owner_name" placeholder="Owner Name" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="form-group">
                                         <label for="shop_name">দোকান নাম<span class="text-danger">*</span></label>
                                         <input type="text" value="{{old('shop_name',$shop->shop_name)}}" class="form-control border border-primary" name="shop_name" placeholder="Shop Name" required>
                                     </div>
                                     {{-- @if($errors->has('shop_name'))
                                         <span class="text-danger"> {{ $errors->first('shop_name') }}</span>
                                     @endif --}}
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <div class="form-group">
-                                        <label for="owner_name">মালিক নাম<span class="text-danger">*</span></label>
-                                        <input type="text" value="{{old('owner_name',$shop->owner_name)}}" class="form-control border border-primary" name="owner_name" placeholder="Owner Name" required>
-                                    </div>
                                 </div>
                                 {{-- <div class="col-lg-4 col-md-6 col-sm-6 d-none">
                                     <div class="form-group">

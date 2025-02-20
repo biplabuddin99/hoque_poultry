@@ -23,13 +23,12 @@
                             <div class="row">
                                 <div class="col-lg-2 col-sm-6">
                                     <div class="form-group">
-                                        <input type="text" name="shop_name" value="{{isset($_GET['shop_name'])?$_GET['shop_name']:''}}" placeholder="দোকান নাম" class="form-control">
+                                        <input type="text" name="owner_name" value="{{isset($_GET['owner_name'])?$_GET['owner_name']:''}}" placeholder="মালিক নাম" class="form-control">
                                     </div>
                                 </div>
-
                                 <div class="col-lg-2 col-sm-6">
                                     <div class="form-group">
-                                        <input type="text" name="owner_name" value="{{isset($_GET['owner_name'])?$_GET['owner_name']:''}}" placeholder="মালিক নাম" class="form-control">
+                                        <input type="text" name="shop_name" value="{{isset($_GET['shop_name'])?$_GET['shop_name']:''}}" placeholder="দোকান নাম" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-6">

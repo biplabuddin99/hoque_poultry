@@ -37,14 +37,14 @@
                                 </div> --}}
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="shop_name">দোকানের নাম<span class="text-danger">*</span></label>
-                                        <input type="text" value="{{old('shop_name')}}" class="form-control border border-primary" name="shop_name" placeholder="এখানে দোকানের নাম দিন" required>
+                                        <label for="owner_name">মালিকের নাম<span class="text-danger">*</span></label>
+                                        <input type="text" value="{{old('owner_name')}}" class="form-control border border-primary" name="owner_name" placeholder="এখানে মালিকের নাম দিন" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="owner_name">মালিকের নাম<span class="text-danger">*</span></label>
-                                        <input type="text" value="{{old('owner_name')}}" class="form-control border border-primary" name="owner_name" placeholder="এখানে মালিকের নাম দিন" required>
+                                        <label for="shop_name">দোকানের নাম<span class="text-danger">*</span></label>
+                                        <input type="text" value="{{old('shop_name')}}" class="form-control border border-primary" name="shop_name" placeholder="এখানে দোকানের নাম দিন" required>
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-4 col-md-6 col-sm-6 d-none">
