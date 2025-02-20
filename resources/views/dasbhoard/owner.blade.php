@@ -5,7 +5,7 @@
 
 <div class="page-content py-3">
     <section class="row">
-        <h2> এখানে ড্যাশবোর্ড সাজাবো।</h2>
+        <h2>এই প্রজেক্টের কাজ চলমান।</h2>
        {{-- <div class="col-md-3 col-sm-6 col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-aqua">
