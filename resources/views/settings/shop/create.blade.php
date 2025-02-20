@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle','Create Shop')
+@section('pageTitle','নতুন সেল সেন্টার যুক্ত করুন')
 @section('pageSubTitle','Create')
 @section('content')
 <section id="multiple-column-form">
@@ -37,17 +37,17 @@
                                 </div> --}}
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="shop_name">Shop Name<span class="text-danger">*</span></label>
-                                        <input type="text" value="{{old('shop_name')}}" class="form-control border border-primary" name="shop_name" placeholder="Shop Name" required>
+                                        <label for="shop_name">দোকানের নাম<span class="text-danger">*</span></label>
+                                        <input type="text" value="{{old('shop_name')}}" class="form-control border border-primary" name="shop_name" placeholder="এখানে দোকানের নাম দিন" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="owner_name">Owner Name<span class="text-danger">*</span></label>
-                                        <input type="text" value="{{old('owner_name')}}" class="form-control border border-primary" name="owner_name" placeholder="Owner Name" required>
+                                        <label for="owner_name">মালিকের নাম<span class="text-danger">*</span></label>
+                                        <input type="text" value="{{old('owner_name')}}" class="form-control border border-primary" name="owner_name" placeholder="এখানে মালিকের নাম দিন" required>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6 d-none">
+                                {{-- <div class="col-lg-4 col-md-6 col-sm-6 d-none">
                                     <div class="form-group">
                                         <label for="dsr_id">DSR <span class="text-danger">*</span></label>
                                         <select class="form-select border border-primary" name="dsr_id">
@@ -58,11 +58,11 @@
                                             @endforelse
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="contact">Contact No</label>
-                                        <input type="text" value="{{old('contact')}}" class="form-control border border-primary" placeholder="Contact" name="contact">
+                                        <label for="contact">মোবাইল নাম্বার</label>
+                                        <input type="text" value="{{old('contact')}}" class="form-control border border-primary" placeholder="এখানে মোবাইল নাম্বার দিন" name="contact">
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-6">
@@ -73,8 +73,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="address">Address</label>
-                                        <textarea class="form-control border border-primary" name="address" rows="2">{{old('address')}}</textarea>
+                                        <label for="address">ঠিকানা</label>
+                                        <textarea class="form-control border border-primary" name="address" rows="2" placeholder="ঠিকানা দিন">{{old('address')}}</textarea>
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-4 col-md-6 col-sm-6">

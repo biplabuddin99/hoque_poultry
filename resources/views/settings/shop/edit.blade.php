@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle','Update Shop')
+@section('pageTitle','আপডেট করুন Shop')
 @section('pageSubTitle','Update')
 
 @section('content')
@@ -40,7 +40,7 @@
                                 </div> --}}
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="shop_name">Shop Name<span class="text-danger">*</span></label>
+                                        <label for="shop_name">দোকান নাম<span class="text-danger">*</span></label>
                                         <input type="text" value="{{old('shop_name',$shop->shop_name)}}" class="form-control border border-primary" name="shop_name" placeholder="Shop Name" required>
                                     </div>
                                     {{-- @if($errors->has('shop_name'))
@@ -49,11 +49,11 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="owner_name">Owner Name<span class="text-danger">*</span></label>
+                                        <label for="owner_name">মালিক নাম<span class="text-danger">*</span></label>
                                         <input type="text" value="{{old('owner_name',$shop->owner_name)}}" class="form-control border border-primary" name="owner_name" placeholder="Owner Name" required>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6 d-none">
+                                {{-- <div class="col-lg-4 col-md-6 col-sm-6 d-none">
                                     <div class="form-group">
                                         <label for="dsr_id">DSR <span class="text-danger">*</span></label>
                                         <select class="form-select border border-primary" name="dsr_id">
@@ -64,10 +64,10 @@
                                             @endforelse
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="contact">Contact No</label>
+                                        <label for="contact">মোবাইল নাম্বার:</label>
                                         <input type="text" value="{{old('contact',$shop->contact)}}" class="form-control border border-primary" placeholder="Contact" name="contact">
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="address">Address</label>
+                                        <label for="address">ঠিকানা</label>
                                         <textarea class="form-control border border-primary" name="address" rows="2">{{old('address',$shop->address)}}</textarea>
                                     </div>
                                 </div>
