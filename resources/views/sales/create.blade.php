@@ -43,7 +43,7 @@
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label for=""><b>product</b></label>
-                                        <select class="form-control form-select product_id" id="product_id" name="product_id" onchange="productData(this);">
+                                        <select class="form-control form-select product_id select2" id="product_id" name="product_id" onchange="productData(this);">
                                             <option value="">Select Product</option>
                                             @forelse ($product as $p)
                                             <option value="{{$p->id}}" {{ request('product_id')==$p->id?"selected":""}}>{{$p->product_name}}</option>
@@ -52,6 +52,17 @@
                                             @endforelse
 
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="product_price">{{__(' Price')}}</label>
+                                        <input type="number" placeholder="Price" min="0" step="0.01" class="form-control product_price" value="{{ old('product_price')}}" name="product_price">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
@@ -206,48 +217,6 @@ $(document).ready(function() {
         return false;
     }
 
-    function addRow(){
-
-        var row=`
-        <tr>
-            <td>
-                <select class="choices form-select product_id" id="product_id" name="product_id[]">
-                    <option value="">Select Product</option>
-                    @forelse (\App\Models\Product\Product::where(company())->get() as $pro)
-                    <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
-                    @empty
-                    @endforelse
-                </select>
-            </td>
-            <td><input class="form-control ctn"  onblur="productData(this);" onchange="productData(this);" onkeyup="productData(this);" type="text" name="ctn[]" value="" placeholder="ctn"></td>
-            <td><input class="form-control pcs"  onblur="productData(this);" onchange="productData(this);"  onkeyup="productData(this);" type="text" name="pcs[]"value="" placeholder="pcs"></td>
-            <td>
-                <select class="form-select select_tp_tpfree" name="select_tp_tpfree[]" onchange="productData(this);">
-                    <option value="1">TP</option>
-                    <option value="2">TP Free</option>
-                </select>
-            </td>
-            <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="" placeholder="Tp Price"></td>
-            <td><input readonly class="form-control per_pcs_price" name="per_pcs_price[]" type="text" value="" placeholder="PCS Price"></td>
-            <td>
-                <input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total">
-                <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
-            </td>
-            <td>
-                {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
-                {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
-            </td>
-        </tr>`;
-        $('#sales_repeat').append(row);
-    }
-
-    function removeRow(e){
-        if (confirm("Are you sure you want to remove this row?")) {
-            $(e).closest('tr').remove();
-            total_calculate();
-        }
-    }
-
     function productData(e) {
         var selectedOption = parseInt($(e).closest('tr').find('.select_tp_tpfree').val());
         //console.log(selectedOption)
@@ -317,7 +286,6 @@ $(document).ready(function() {
 
 
 </script>
-
 
 <script>
 

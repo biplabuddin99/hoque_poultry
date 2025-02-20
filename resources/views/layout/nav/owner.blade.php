@@ -58,7 +58,7 @@
             {{-- <li class="py-1 submenu-item"><a href="{{route(currentUser().'.sales.create')}}" >{{__('New Sales')}}</a></li> --}}
             <li class="py-1 submenu-item"><a href="{{route(currentUser().'.sales.create')}}" >{{__('New Sales')}}</a></li>
             {{-- <li class="py-1 submenu-item"><a href="{{route(currentUser().'.sales.index')}}" >{{__('Sales List')}}</a></li> --}}
-            <li class="py-1 submenu-item"><a href="{{route(currentUser().'.selectedCreate')}}" >{{__('New Sales')}}</a></li>
+            {{-- <li class="py-1 submenu-item"><a href="{{route(currentUser().'.selectedCreate')}}" >{{__('New Sales')}}</a></li> --}}
             {{-- <li class="py-1 submenu-item"><a href="{{route(currentUser().'.selectedIndex')}}" >{{__('Sales List')}}</a></li> --}}
             {{-- <li class="py-1 submenu-item"><a href="{{route(currentUser().'.salesClosing')}}" >{{__('Sales Closing')}}</a></li> --}}
             {{-- <li class="py-1 submenu-item"><a href="{{route(currentUser().'.salesClosingList')}}" >{{__('Sales Closing List')}}</a></li> --}}
