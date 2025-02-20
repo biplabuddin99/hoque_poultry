@@ -965,6 +965,11 @@ class SalesController extends Controller
 
         return response()->json($response, 200);
     }
+    public function getproduct(Request $request)
+    {
+        $products = Product::where('id', $request->productId)->pluck('tp_price');
+        return response()->json($products, 200);
+    }
     public function selectedSupplierProduct(Request $request)
     {
         $products = Product::where('distributor_id', $request->supplier_id)->get();

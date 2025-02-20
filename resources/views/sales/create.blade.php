@@ -43,7 +43,7 @@
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label for=""><b>product</b></label>
-                                        <select class="form-control form-select product_id select2" id="product_id" name="product_id" onchange="productData(this);">
+                                        <select class="form-control form-select product_id select2" id="product_id" name="product_id" onchange="getproductData(this);">
                                             <option value="">Select Product</option>
                                             @forelse ($product as $p)
                                             <option value="{{$p->id}}" {{ request('product_id')==$p->id?"selected":""}}>{{$p->product_name}}</option>
@@ -57,12 +57,26 @@
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label for="product_price">{{__(' Price')}}</label>
-                                        <input type="number" placeholder="Price" min="0" step="0.01" class="form-control product_price" value="{{ old('product_price')}}" name="product_price">
+                                        <input type="number" onkeyup="TotalPriceCount(this);" onchange="TotalPriceCount(this);" onblur="TotalPriceCount(this);" placeholder="Price" min="0" step="0.01" class="form-control product_price" value="{{ old('product_price')}}" name="product_price">
 
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
+                                        <label for="kg">{{__(' কেজি')}}</label>
+                                        <input type="number" onkeyup="TotalPriceCount(this);" onchange="TotalPriceCount(this);" onblur="TotalPriceCount(this);" placeholder="কেজি" min="0" step="0.01" class="form-control kg" value="{{ old('kg')}}" name="kg">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="gm">{{__(' গ্রাম')}}</label>
+                                        <input type="number" onkeyup="TotalPriceCount(this);" onchange="TotalPriceCount(this);" onblur="TotalPriceCount(this);" placeholder="গ্রাম" min="0" step="0.01" class="form-control gm" value="{{ old('gm')}}" name="gm">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="total_taka">{{__('মোট টাকা')}}</label>
+                                        <input type="number" placeholder="মোট টাকা" min="0" step="0.01" class="form-control total_taka" value="{{ old('total_taka')}}" name="total_taka">
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
@@ -83,197 +97,47 @@
 @endsection
 @push("scripts")
 <script>
-    let old_supplier_id=0;
-    function getProduct(e){
-        var SuplierId=$('.supplier_id').val();
-        let counter = 0;
-        if(old_supplier_id!=SuplierId){
-            $.ajax({
-                url: "{{route(currentUser().'.get_supplier_product')}}",
-                type: "GET",
-                dataType: "json",
-                data: { supplier_id:SuplierId },
-                success: function(productdata) {
-                    console.log(productdata);
-                    let selectElement = $('.sales_repeat');
-                        selectElement.empty();
-                        $.each(productdata, function(index, value) {
-                            selectElement.append(
-                                `<tr>
-                                    <td>
-                                        <input readonly class="form-control" type="text" value="${value.product.product_name}" placeholder="">
-                                        <input readonly class="form-control product_id" type="hidden" name="product_id[]" value="${value.product.id}">
-                                        <input readonly class="form-control tp_price" type="hidden" value="${value.product.tp_price}">
-                                        <input readonly class="form-control tp_free" type="hidden" value="${value.product.tp_free}">
-                                        {{--  <select class="choices form-select product_id" id="product_id" name="product_id[]">
-                                            <option value="">Select Product</option>
-                                            @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                            <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
-                                            @empty
-                                            @endforelse
-                                        </select>  --}}
-                                    </td>
-                                    <td><input class="form-control ctn" onkeyup="productData(this);" onblur="productData(this);" onchange="productData(this);"  type="text" name="ctn[]" value="" placeholder="ctn"></td>
-                                    <td><input class="form-control pcs" onkeyup="productData(this);" onblur="productData(this);" onchange="productData(this);"  type="text" name="pcs[]"value="" placeholder="pcs"></td>
-                                    <td>
-                                        <select class="form-select select_tp_tpfree" name="select_tp_tpfree[]" onchange="productData(this);">
-                                            <option value="1">TP</option>
-                                            <option value="2">TP Free</option>
-                                        </select>
-                                    </td>
-                                    <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="" placeholder="Tp Price"></td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <input readonly class="form-control per_pcs_price" name="per_pcs_price[]" type="text" value="" placeholder="PCS Price">
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal${counter}">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </a>
-                                            <div class="modal fade custom-modal" id="exampleModal${counter}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content p-3">
-                                                        <form onsubmit="return productForm(this)">
-                                                            <input type="hidden" name="product_id" value="${value.product.id}" class="modalProductId">
-                                                            <input type="hidden" value="${counter}" class="rowID">
-                                                            <div class="form-group">
-                                                                <label for="modalProductName">Product Name : ${value.product.product_name}</label>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="modalTpPrice">TP Price</label>
-                                                                <input type="text" name="tp_price" class="form-control modalTpPrice" value="${value.product.tp_price}">
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Save changes</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total">
-                                        <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
-                                    </td>
-                                    <td>${value.showqty}</td>
-                                    {{--  <td>
-                                        <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-                                        <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-                                    </td>  --}}
-                                </tr>`
-                            );
-                            counter++;
-                        });
-                },
-            });
-            old_supplier_id=SuplierId;
-            getShopData();
-        }
-        $('.show_click').removeClass('d-none');
-     };
+function getproductData(e) {
+    let product_id = $('.product_id').val();
 
+    $.ajax({
+        url: "{{ route(currentUser().'.getproduct') }}", // Get product details
+        type: "GET",
+        dataType: "json",
+        data: { productId: product_id },
+        success: function(response) {
+            let productPrice = parseFloat(response) || 0; // Ensure it's a valid number
+            $('.product_price').val(productPrice);
 
-$(document).ready(function() {
-    // Open modal with current row data
-    $(document).on('click', '.bi-pencil-square', function() {
-        var currentRow = $(this).closest('tr');
-        var productId = currentRow.find('.product_id').val();
-        var productName = currentRow.find('input[type="text"]').val();
-        var tpPrice = currentRow.find('.tp_price').val();
-        $('#modalProductId').val(productId);
-        $('#modalProductName').val(productName);
-        $('#modalTpPrice').val(tpPrice);
-        $('#exampleModal').modal('show');
+            // Call TotalPriceCount after setting the new price
+            TotalPriceCount();
+        },
     });
+}
+
+function TotalPriceCount() {
+    let kg = parseFloat($('.kg').val()) || 0; // Default to 0 if empty
+    let gm = parseFloat($('.gm').val()) || 0;
+    let product_price = parseFloat($('.product_price').val()) || 0;
+
+    let gmTk = (gm * product_price) / 1000; // Convert grams to kg price
+    let totalprice = (product_price * kg) + gmTk;
+
+    $('.total_taka').val(totalprice.toFixed(2)); // Ensure two decimal places
+}
+
+// Recalculate total price when kg, gm, or product price changes
+$(document).on("keyup change", ".kg, .gm, .product_price", function() {
+    TotalPriceCount();
 });
-    function productForm(e) {
-        let updatedTpPrice = $(e).find('.modalTpPrice').val();
-        let productId = $(e).find('.modalProductId').val();
-        let rowID = $(e).find('.rowID').val();
-        let currentRow = $('.product_id[value="' + productId + '"]').closest('tr');
 
-        $.ajax({
-            url: '{{ route('owner.update_product_price') }}', // Corrected this line
-            method: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                tp_price: updatedTpPrice,
-                product_id: productId
-            },
-            success: function(response) {
-                if (response.success) {
-                    currentRow.find('.tp_price').val(updatedTpPrice);
-                    $('#exampleModal'+rowID).modal('hide');
-                } else {
-                    console.error('Failed to update price:', response.message);
-                }
-                return false;
-            },
-            error: function(xhr) {
-                console.log(xhr.responseText);
-                return false;
-            }
-        });
-        return false;
-    }
+// Ensure total price updates when product changes
+$(document).on("change", ".product_id", function() {
+    getproductData(this);
+});
 
-    function productData(e) {
-        var selectedOption = parseInt($(e).closest('tr').find('.select_tp_tpfree').val());
-        //console.log(selectedOption)
-        var tp = $(e).closest('tr').find('.tp_price').val();
-        var tpFree = $(e).closest('tr').find('.tp_free').val();
-        var productId = $(e).closest('tr').find('.product_id').val();
-        //var productId = parseInt($(e).closest('tr').find('.product_id option:selected').val());
-        //var tp = $(e).closest('tr').find('.product_id option:selected').attr('data-tp');
-        //var tpFree = $(e).closest('tr').find('.product_id option:selected').attr('data-tp_free');
-        var ctn = $(e).closest('tr').find('.ctn').val() ? parseFloat($(e).closest('tr').find('.ctn').val()) : 0;
-        var pcs = $(e).closest('tr').find('.pcs').val() ? parseFloat($(e).closest('tr').find('.pcs').val()) : 0;
-        $.ajax({
-            url: "{{route(currentUser().'.unit_data_get')}}",
-            type: "GET",
-            dataType: "json",
-            data: { product_id: productId },
-            success: function (data) {
-                // this function have doController UnitDataGet return qty
-                //UPDATE `temporary_sales_details` SET `totalquantity_pcs`=(`subtotal_price`/`pcs_price`) WHERE `totalquantity_pcs`=0 AND subtotal_price>0
-                console.log(data);
-                let totalqty=((data*ctn)+pcs);
-                console.log(totalqty);
-                $(e).closest('tr').find('.totalquantity_pcs').val(totalqty);
-                if(data){
-                    let ctnTp=parseFloat(tp * data).toFixed(2);
-                    let ctntpFree=parseFloat(tpFree * data).toFixed(2);
-                    let tpCtnPrice = parseFloat(ctnTp * ctn);
-                    let tpPCSPrice = parseFloat(tp * pcs);
-                    let tpFreeCtnPrice = parseFloat((tpFree * data) * ctn);
-                    let tpFreePcsPrice = parseFloat(tpFree * pcs);
-                    var TpSubtotal = parseFloat(tpPCSPrice + tpCtnPrice).toFixed(2);
-                    var TpFreeSubtotal = parseFloat(tpFreePcsPrice + tpFreeCtnPrice).toFixed(2);
-
-                    if (selectedOption === 1) {
-                        //$(e).closest('tr').find('.ctn_price').val(tp);
-                        $(e).closest('tr').find('.ctn_price').val(ctnTp);
-                        $(e).closest('tr').find('.per_pcs_price').val(tp);
-                        $(e).closest('tr').find('.subtotal_price').val(TpSubtotal);
-                    } else if (selectedOption === 2) {
-                        $(e).closest('tr').find('.ctn_price').val(ctntpFree);
-                        $(e).closest('tr').find('.per_pcs_price').val(tpFree);
-                        $(e).closest('tr').find('.subtotal_price').val(TpFreeSubtotal);
-                    } else {
-                        $(e).closest('tr').find('.ctn_price').val("");
-                        $(e).closest('tr').find('.subtotal_price').val("");
-                    }
-                    total_calculate();
-                }
-            },
-            error: function () {
-                console.error("Error fetching data from the server.");
-            },
-        });
-
-    }
-
-
+</script>
+<script>
     function total_calculate() {
         var subtotal = 0;
         $('.subtotal_price').each(function() {
@@ -287,35 +151,5 @@ $(document).ready(function() {
 
 </script>
 
-<script>
-
-$(document).ready(function() {
-    // Event listener for save changes button in modal
-    $('#saveChanges').click(function() {
-        // Get updated TP Price from modal
-        const updatedTpPrice = $('#modalTpPrice').val();
-        // AJAX request to update product in database
-        $.ajax({
-            url: '/update.product', // Your update route here
-            method: 'POST',
-            data: {
-                _token: $('input[name="_token"]').val(),
-                tp_price: updatedTpPrice
-            },
-            success: function(response) {
-                // Update TP Price in the table row
-                currentRow.find('.form-control[name="ctn_price[]"]').val(updatedTpPrice);
-
-                // Close modal
-                $('#exampleModal').modal('hide');
-            },
-            error: function(xhr) {
-                console.log(xhr.responseText); // Handle error
-            }
-        });
-    });
-});
-
-</script>
 
 @endpush
