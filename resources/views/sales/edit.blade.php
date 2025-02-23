@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Sales Create'))
+@section('pageTitle',trans('সেলস আপডেট করুন'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
@@ -30,10 +30,10 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" onsubmit="return confirm('Are you sure?')">
+                        <form method="post" action="{{route(currentUser().'.sales.salesUpdate',encryptor('encrypt',$sales->id))}}" onsubmit="return confirm('Are you sure?')">
                         {{-- <form method="post" action="{{route(currentUser().'.product.update',encryptor('encrypt',$product->id))}}" onsubmit="return confirm('Are you sure?')"> --}}
                             @csrf
-                            @method('PATCH')
+                            @method('POST')
                             <div class="row p-2 mt-4">
                                 <input type="hidden" name="sales_type" value="0">
                                 <div class="col-lg-4 col-md-6 col-sm-12">
@@ -45,7 +45,7 @@
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label for="product_pcs">{{__('পিস')}}</label>
-                                        <input type="number" placeholder="পিস" min="0" step="0.01" class="form-control product_pcs" value="{{ old('product_pcs')}}" name="product_price">
+                                        <input type="number" placeholder="পিস" min="0" step="0.01" class="form-control product_pcs" value="{{ old('product_pcs',$sales->product_pcs)}}" name="product_pcs">
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
@@ -54,7 +54,7 @@
                                         <select class="form-control form-select shop_id select2" id="shop_id" name="shop_id">
                                             <option value="">Select</option>
                                             @forelse ($shops as $p)
-                                            <option value="{{$p->id}}" {{ request('shop_id')==$p->id?"selected":""}}>{{$p->owner_name}}</option>
+                                            <option value="{{$p->id}}" {{ $sales->shop_id==$p->id?"selected":""}}>{{$p->owner_name}}</option>
                                             @empty
                                                 <option value="">No Data Found</option>
                                             @endforelse
@@ -66,7 +66,7 @@
                                     <div class="form-group">
                                         <label for=""><b>product</b></label>
                                         <select class="form-control form-select product_id select2" id="product_id" name="product_id" onchange="getproductData(this);">
-                                            <option value="">Select Product</option>
+                                            <option value="">পন্য নির্বাচন করুন</option>
                                             @forelse ($product as $p)
                                             <option value="{{$p->id}}" {{ $sales->product_id==$p->id?"selected":""}}>{{$p->product_name}}</option>
                                             @empty

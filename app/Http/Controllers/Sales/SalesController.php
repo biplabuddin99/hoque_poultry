@@ -298,6 +298,41 @@ class SalesController extends Controller
         $product = Product::where(company())->get();
         return view('sales.edit',compact('sales','shops','product'));
     }
+    public function salesUpdateStore( Request $request, $id)
+    {
+        try{
+            $data=TemporarySales::findOrFail(encryptor('decrypt',$id));
+            $data->sales_type = $request->sales_type;
+            $data->product_pcs = $request->product_pcs;
+            $data->shop_id = $request->shop_id;
+            $data->product_id = $request->product_id;
+            $data->product_price = $request->product_price;
+            $data->kg = $request->kg;
+            $data->gm = $request->gm;
+            // $data->distributor_id = $request->distributor_id;
+            $data->sales_date = date('Y-m-d', strtotime($request->sales_date));
+            // $data->memu_code = 'M-'.Carbon::now()->format('m-y').'-'. str_pad((TemporarySales::whereYear('created_at', Carbon::now()->year)->count() + 1),4,"0",STR_PAD_LEFT);
+            $data->total = $request->total_taka;
+            $data->status = 0;
+            $data->company_id=company()['company_id'];
+            $data->created_by= currentUserId();
+            $data->save();
+           if($data->save()){
+                Toastr::success('Update Successfully!');
+                return redirect()->route(currentUser().'.sales.index');
+            }else{
+            Toastr::warning('Please try Again!');
+             return redirect()->back();
+            }
+
+        }
+        catch (Exception $e){
+            dd($e);
+            DB::rollback();
+            return back()->withInput();
+
+        }
+    }
     public function PrimaryUpdate($id)
     {
         //$sales = TemporarySales::where('status',0)->findOrFail(encryptor('decrypt',$id));

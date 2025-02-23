@@ -57,7 +57,7 @@
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label for="product_pcs">{{__('পিস')}}</label>
-                                        <input type="number" placeholder="পিস" min="0" step="0.01" class="form-control product_pcs" value="{{ old('product_pcs')}}" name="product_price">
+                                        <input type="number" placeholder="পিস" min="0" step="0.01" class="form-control product_pcs" value="{{ old('product_pcs')}}" name="product_pcs">
 
                                     </div>
                                 </div>
