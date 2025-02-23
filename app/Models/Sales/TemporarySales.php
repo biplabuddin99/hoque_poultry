@@ -2,12 +2,13 @@
 
 namespace App\Models\Sales;
 
-use App\Models\Settings\Location\Area;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\Settings\Shop;
-use App\Models\Settings\Supplier;
 use App\Models\User;
+use App\Models\Settings\Shop;
+use App\Models\Product\Product;
+use App\Models\Settings\Supplier;
+use App\Models\Settings\Location\Area;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TemporarySales extends Model
 {
@@ -15,6 +16,9 @@ class TemporarySales extends Model
     public function shop(){
         return $this->belongsTo(Shop::class,'shop_id','id');
        }
+       public function product(){
+        return $this->belongsTo(Product::class,'product_id','id');
+    }
     public function dsr(){
         return $this->belongsTo(User::class,'dsr_id','id');
        }

@@ -36,19 +36,19 @@ class SalesController extends Controller
     {
         $sales=TemporarySales::where('status',0)->where('sales_type',0)->where(company());
         $userSr=User::where(company())->where('role_id',5)->get();
-        $distributors = Supplier::where(company())->select('id','name')->get();
-        $sr = User::where(company())->where('role_id',5)->select('id','name')->get();
+        $shops = Shop::where(company())->select('id','owner_name')->get();
+        $products = Product::where(company())->select('id','product_name')->get();
         if ($request->fdate) {
             $tdate = $request->tdate ?: $request->fdate;
             $sales->whereBetween(DB::raw('date(temporary_sales.sales_date)'), [$request->fdate, $tdate]);
         }
-        if ($request->distributor_id)
-            $sales->where('distributor_id',$request->distributor_id);
-        if ($request->sr_id)
-            $sales->where('sr_id',$request->sr_id);
+        if ($request->shop_id)
+            $sales->where('shop_id',$request->shop_id);
+        if ($request->product_id)
+            $sales->where('product_id',$request->product_id);
 
         $sales = $sales->paginate(20);
-        return view('sales.index',compact('sales','userSr','sr','distributors'));
+        return view('sales.index',compact('sales','userSr','products','shops'));
     }
     public function selectedIndex(Request $request)
     {
@@ -101,13 +101,9 @@ class SalesController extends Controller
 
     public function create()
     {
-        $user=User::where('id',currentUserId())->where('role_id',3)->select('distributor_id')->first();
-        $userSr=User::where(company())->where('role_id',5)->get();
-        $area_name = Shop::select('area_name')->groupBy('area_name')->get();
         $shops = Shop::all();
-        $userDsr=User::where(company())->where('role_id',4)->get();
         $product = Product::where(company())->get();
-        return view('sales.create',compact('user','userSr','shops','area_name','userDsr','product'));
+        return view('sales.create',compact('shops','product'));
     }
     // public function create()
     // {
@@ -129,86 +125,28 @@ class SalesController extends Controller
     }
 
     public function store(Request $request)
-    { //dd($request->all());
-        DB::beginTransaction();
+    {
         try{
             $data=new TemporarySales;
-            $data->select_shop_dsr = $request->select_shop_dsr;
-            $data->shop_id = $request->shop_id;
-            $data->area_id = $request->area_id;
-            $data->dsr_id = $request->dsr_id;
-            $data->sr_id = $request->sr_id;
-            $data->distributor_id = $request->distributor_id;
-            $data->sales_date = date('Y-m-d', strtotime($request->sales_date));
-            $data->memu_code = 'M-'.Carbon::now()->format('m-y').'-'. str_pad((TemporarySales::whereYear('created_at', Carbon::now()->year)->count() + 1),4,"0",STR_PAD_LEFT);
-            if($request->receive_amount){
-                $data->receive_amount = $request->receive_amount;
-            }
-            $data->total = $request->total;
-            $data->status = 0;
             $data->sales_type = $request->sales_type;
+            $data->product_pcs = $request->product_pcs;
+            $data->shop_id = $request->shop_id;
+            $data->product_id = $request->product_id;
+            $data->product_price = $request->product_price;
+            $data->kg = $request->kg;
+            $data->gm = $request->gm;
+            // $data->distributor_id = $request->distributor_id;
+            $data->sales_date = date('Y-m-d', strtotime($request->sales_date));
+            // $data->memu_code = 'M-'.Carbon::now()->format('m-y').'-'. str_pad((TemporarySales::whereYear('created_at', Carbon::now()->year)->count() + 1),4,"0",STR_PAD_LEFT);
+            $data->total = $request->total_taka;
+            $data->status = 0;
             $data->company_id=company()['company_id'];
             $data->created_by= currentUserId();
-            if($data->save()){
-                if($request->subtotal_price){
-                    foreach($request->subtotal_price as $key => $value){
-                        if($request->subtotal_price[$key] > 0){
-                            $details = new TemporarySalesDetails;
-                            $details->tem_sales_id=$data->id;
-                            if($request->group_id){
-                                $details->group_id=$request->group_id[$key];
-                            }
-                            $details->product_id=$request->product_id[$key];
-                            $details->ctn=$request->ctn[$key];
-                            $details->pcs=$request->pcs[$key];
-                            $details->select_tp_tpfree=$request->select_tp_tpfree[$key];
-                            $details->pcs_price=$request->per_pcs_price[$key];
-                            $details->ctn_price=$request->ctn_price[$key];
-                            $details->totalquantity_pcs=$request->totalquantity_pcs[$key];
-                            $details->subtotal_price=$request->subtotal_price[$key];
-                            $details->company_id=company()['company_id'];
-                            $details->created_by= currentUserId();
-                            if($details->save()){
-                                $stock=new Stock;
-                                $stock->tem_sales_id=$data->id;
-                                if($request->group_id){
-                                    $stock->group_id=$request->group_id[$key];
-                                }
-                                $stock->product_id=$request->product_id[$key];
-                                $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
-                                $stock->stock_date=date('Y-m-d', strtotime($request->sales_date));
-                                $stock->status_history=0;
-                                $stock->status=0;
-                                if($request->select_tp_tpfree[$key]==1){
-                                    $stock->tp_price=$request->per_pcs_price[$key];
-                                }else{
-                                    $stock->tp_free=$request->per_pcs_price[$key];
-                                }
-                                $stock->save();
-                            }
-                        }
-                    }
-                }
-                if($request->due_amount){
-                    foreach($request->due_amount as $key => $value){
-                        if($request->due_amount[$key] > 0){
-                            $shopb = new TempShopBalance;
-                            $shopb->tem_sales_id=$data->id;
-                            $shopb->old_due_shop_id=$request->old_due_shop_id[$key];
-                            $shopb->due_amount=$request->due_amount[$key];
-                            $shopb->save();
-                        }
-                    }
-                }
-                DB::commit();
-                if($request->sales_type==0){
-                    Toastr::success('Create Successfully!');
-                    return redirect()->route(currentUser().'.sales.index');
-                }else{
-                    Toastr::success('Create Successfully!');
-                    return redirect()->route(currentUser().'.selectedIndex');
-                }
-            } else{
+            $data->save();
+           if($data->save()){
+                Toastr::success('Create Successfully!');
+                return redirect()->route(currentUser().'.sales.index');
+            }else{
             Toastr::warning('Please try Again!');
              return redirect()->back();
             }
@@ -221,6 +159,99 @@ class SalesController extends Controller
 
         }
     }
+    // public function store(Request $request)
+    // {
+    //     DB::beginTransaction();
+    //     try{
+    //         $data=new TemporarySales;
+    //         $data->select_shop_dsr = $request->select_shop_dsr;
+    //         $data->shop_id = $request->shop_id;
+    //         $data->area_id = $request->area_id;
+    //         $data->dsr_id = $request->dsr_id;
+    //         $data->sr_id = $request->sr_id;
+    //         $data->distributor_id = $request->distributor_id;
+    //         $data->sales_date = date('Y-m-d', strtotime($request->sales_date));
+    //         $data->memu_code = 'M-'.Carbon::now()->format('m-y').'-'. str_pad((TemporarySales::whereYear('created_at', Carbon::now()->year)->count() + 1),4,"0",STR_PAD_LEFT);
+    //         if($request->receive_amount){
+    //             $data->receive_amount = $request->receive_amount;
+    //         }
+    //         $data->total = $request->total;
+    //         $data->status = 0;
+    //         $data->sales_type = $request->sales_type;
+    //         $data->company_id=company()['company_id'];
+    //         $data->created_by= currentUserId();
+    //         if($data->save()){
+    //             if($request->subtotal_price){
+    //                 foreach($request->subtotal_price as $key => $value){
+    //                     if($request->subtotal_price[$key] > 0){
+    //                         $details = new TemporarySalesDetails;
+    //                         $details->tem_sales_id=$data->id;
+    //                         if($request->group_id){
+    //                             $details->group_id=$request->group_id[$key];
+    //                         }
+    //                         $details->product_id=$request->product_id[$key];
+    //                         $details->ctn=$request->ctn[$key];
+    //                         $details->pcs=$request->pcs[$key];
+    //                         $details->select_tp_tpfree=$request->select_tp_tpfree[$key];
+    //                         $details->pcs_price=$request->per_pcs_price[$key];
+    //                         $details->ctn_price=$request->ctn_price[$key];
+    //                         $details->totalquantity_pcs=$request->totalquantity_pcs[$key];
+    //                         $details->subtotal_price=$request->subtotal_price[$key];
+    //                         $details->company_id=company()['company_id'];
+    //                         $details->created_by= currentUserId();
+    //                         if($details->save()){
+    //                             $stock=new Stock;
+    //                             $stock->tem_sales_id=$data->id;
+    //                             if($request->group_id){
+    //                                 $stock->group_id=$request->group_id[$key];
+    //                             }
+    //                             $stock->product_id=$request->product_id[$key];
+    //                             $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
+    //                             $stock->stock_date=date('Y-m-d', strtotime($request->sales_date));
+    //                             $stock->status_history=0;
+    //                             $stock->status=0;
+    //                             if($request->select_tp_tpfree[$key]==1){
+    //                                 $stock->tp_price=$request->per_pcs_price[$key];
+    //                             }else{
+    //                                 $stock->tp_free=$request->per_pcs_price[$key];
+    //                             }
+    //                             $stock->save();
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //             if($request->due_amount){
+    //                 foreach($request->due_amount as $key => $value){
+    //                     if($request->due_amount[$key] > 0){
+    //                         $shopb = new TempShopBalance;
+    //                         $shopb->tem_sales_id=$data->id;
+    //                         $shopb->old_due_shop_id=$request->old_due_shop_id[$key];
+    //                         $shopb->due_amount=$request->due_amount[$key];
+    //                         $shopb->save();
+    //                     }
+    //                 }
+    //             }
+    //             DB::commit();
+    //             if($request->sales_type==0){
+    //                 Toastr::success('Create Successfully!');
+    //                 return redirect()->route(currentUser().'.sales.index');
+    //             }else{
+    //                 Toastr::success('Create Successfully!');
+    //                 return redirect()->route(currentUser().'.selectedIndex');
+    //             }
+    //         } else{
+    //         Toastr::warning('Please try Again!');
+    //          return redirect()->back();
+    //         }
+
+    //     }
+    //     catch (Exception $e){
+    //         dd($e);
+    //         DB::rollback();
+    //         return back()->withInput();
+
+    //     }
+    // }
 
 
     public function show($id)
@@ -259,6 +290,14 @@ class SalesController extends Controller
     }
 
 
+    public function salesUpdate($id)
+    {
+        //$sales = TemporarySales::where('status',0)->findOrFail(encryptor('decrypt',$id));
+        $sales = TemporarySales::findOrFail(encryptor('decrypt',$id));
+        $shops = Shop::all();
+        $product = Product::where(company())->get();
+        return view('sales.edit',compact('sales','shops','product'));
+    }
     public function PrimaryUpdate($id)
     {
         //$sales = TemporarySales::where('status',0)->findOrFail(encryptor('decrypt',$id));

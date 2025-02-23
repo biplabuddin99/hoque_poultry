@@ -36,8 +36,29 @@
                                 <input type="hidden" name="sales_type" value="0">
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
-                                        <label for=""><b>Sales Date</b></label>
+                                        <label for=""><b>তারিখ</b></label>
                                         <input type="text" id="datepicker" class="form-control" value="<?php print(date("m/d/Y")); ?>"  name="sales_date" placeholder="mm-dd-yyyy">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for=""><b>সেল সেন্টার</b></label>
+                                        <select class="form-control form-select shop_id select2" id="shop_id" name="shop_id">
+                                            <option value="">Select</option>
+                                            @forelse ($shops as $p)
+                                            <option value="{{$p->id}}" {{ request('shop_id')==$p->id?"selected":""}}>{{$p->owner_name}}</option>
+                                            @empty
+                                                <option value="">No Data Found</option>
+                                            @endforelse
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="product_pcs">{{__('পিস')}}</label>
+                                        <input type="number" placeholder="পিস" min="0" step="0.01" class="form-control product_pcs" value="{{ old('product_pcs')}}" name="product_price">
+
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
@@ -56,21 +77,21 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
-                                        <label for="product_price">{{__(' Price')}}</label>
-                                        <input type="number" onkeyup="TotalPriceCount(this);" onchange="TotalPriceCount(this);" onblur="TotalPriceCount(this);" placeholder="Price" min="0" step="0.01" class="form-control product_price" value="{{ old('product_price')}}" name="product_price">
+                                        <label for="product_price">{{__('দর')}}</label>
+                                        <input type="number" onkeyup="TotalPriceCount(this);" onchange="TotalPriceCount(this);" placeholder="দর" min="0" step="0.01" class="form-control product_price" value="{{ old('product_price')}}" name="product_price">
 
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
-                                        <label for="kg">{{__(' কেজি')}}</label>
-                                        <input type="number" onkeyup="TotalPriceCount(this);" onchange="TotalPriceCount(this);" onblur="TotalPriceCount(this);" placeholder="কেজি" min="0" step="0.01" class="form-control kg" value="{{ old('kg')}}" name="kg">
+                                        <label for="kg">{{__('কেজি')}}</label>
+                                        <input type="number" onkeyup="TotalPriceCount(this);" onchange="TotalPriceCount(this);" placeholder="কেজি" min="0" step="0.01" class="form-control kg" value="{{ old('kg')}}" name="kg">
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
-                                        <label for="gm">{{__(' গ্রাম')}}</label>
-                                        <input type="number" onkeyup="TotalPriceCount(this);" onchange="TotalPriceCount(this);" onblur="TotalPriceCount(this);" placeholder="গ্রাম" min="0" step="0.01" class="form-control gm" value="{{ old('gm')}}" name="gm">
+                                        <label for="gm">{{__('গ্রাম')}}</label>
+                                        <input type="number" onkeyup="TotalPriceCount(this);" onchange="TotalPriceCount(this);" placeholder="গ্রাম" min="0" step="0.01" class="form-control gm" value="{{ old('gm')}}" name="gm">
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">

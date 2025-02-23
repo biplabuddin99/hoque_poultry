@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle',trans('বিক্রয় তালিকা'))
+@section('pageTitle',trans('Sales List'))
 @section('pageSubTitle',trans('List'))
 
 @section('content')
@@ -12,30 +12,30 @@
                     <form action="">
                         <div class="row">
                             <div class="col-lg-3 col-md-6 col-sm-12 py-1">
-                                <label for="fdate">{{__('তারিখ হতে')}}</label>
+                                <label for="fdate">{{__('From Date')}}</label>
                                 <input type="date" id="fdate" class="form-control" value="{{ request('fdate')}}" name="fdate">
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12 py-1">
-                                <label for="fdate">{{__('তারিখ পর্যন্ত')}}</label>
+                                <label for="fdate">{{__('To Date')}}</label>
                                 <input type="date" id="tdate" class="form-control" value="{{ request('tdate')}}" name="tdate">
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12 py-1">
-                                <label for="lcNo">{{__('সেল সেন্টার')}}</label>
-                                <select name="shop_id" class="select2 form-select">
+                                <label for="lcNo">{{__('Distributor')}}</label>
+                                <select name="distributor_id" class="select2 form-select">
                                     <option value="">Select</option>
-                                    @forelse ($shops as $d)
-                                        <option value="{{$d->id}}" {{ request('shop_id')==$d->id?"selected":""}}>{{$d->owner_name}}</option>
+                                    @forelse ($distributors as $d)
+                                        <option value="{{$d->id}}" {{ request('distributor_id')==$d->id?"selected":""}}>{{$d->name}}</option>
                                     @empty
                                         <option value="">No Data Found</option>
                                     @endforelse
                                 </select>
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12 py-1">
-                                <label for="lcNo">{{__('পন্য')}}</label>
-                                <select name="product_id" class="select2 form-select">
+                                <label for="lcNo">{{__('SR')}}</label>
+                                <select name="sr_id" class="select2 form-select">
                                     <option value="">Select</option>
-                                    @forelse ($products as $d)
-                                        <option value="{{$d->id}}" {{ request('product_id')==$d->id?"selected":""}}>{{$d->product_name}}</option>
+                                    @forelse ($sr as $d)
+                                        <option value="{{$d->id}}" {{ request('sr_id')==$d->id?"selected":""}}>{{$d->name}}</option>
                                     @empty
                                         <option value="">No Data Found</option>
                                     @endforelse
@@ -58,14 +58,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
-                                    <th scope="col">তারিখ</th>
-                                    <th scope="col">সেল সেন্টার</th>
-                                    <th scope="col">{{__('পন্য')}}</th>
-                                    <th scope="col">{{__('পিস')}}</th>
-                                    <th scope="col">{{__('কেজি')}}</th>
-                                    <th scope="col">{{__('গ্রাম')}}</th>
-                                    <th scope="col">{{__('দর')}}</th>
-                                    <th scope="col">{{__('মোট টাকা')}}</th>
+                                    <th scope="col"><span class="text-info">DSR</span> / <span class="text-danger">Shop</span></th>
+                                    <th scope="col">{{__('SR')}}</th>
+                                    <th scope="col">{{__('Distributor')}}</th>
+                                    <th scope="col">{{__('sales_date')}}</th>
+                                    <th scope="col">{{__('total')}}</th>
                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                 </tr>
                             </thead>
@@ -73,21 +70,24 @@
                                 @forelse($sales as $key=>$p)
                                 <tr>
                                     <th scope="row">{{ $sales->firstItem() + $key }}</th>
+                                    <td>
+                                        @if (!empty($p->shop->shop_name))
+                                        <span class="text-danger">Shop :</span> {{ $p->shop?->shop_name }}
+                                        @else
+                                        <span class="text-info">DSR :</span> {{ $p->dsr?->name }}
+                                        @endif
+                                    </td>
+                                    <td>{{$p->sr?->name}}</td>
+                                    <td>{{$p->distributor?->name}}</td>
                                     <td>{{$p->sales_date}}</td>
-                                    <td>{{ $p->shop?->shop_name }}</td>
-                                    <td>{{$p->product?->product_name}}</td>
-                                    <td>{{$p->product_pcs}}</td>
-                                    <td>{{$p->product_price}}</td>
-                                    <td>{{$p->kg}}</td>
-                                    <td>{{$p->gm}}</td>
                                     <td>{{$p->total}}</td>
                                     <td class="white-space-nowrap">
-                                        {{-- <a class="ms-2" href="{{route(currentUser().'.sales.receiveScreen',encryptor('encrypt',$p->id))}}">
+                                        <a class="ms-2" href="{{route(currentUser().'.sales.receiveScreen',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-receipt-cutoff"></i>
-                                        </a> --}}
-                                        {{-- <a class="ms-2" href="{{route(currentUser().'.sales.show',encryptor('encrypt',$p->id))}}">
+                                        </a>
+                                        <a class="ms-2" href="{{route(currentUser().'.sales.show',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-eye-fill"></i>
-                                        </a> --}}
+                                        </a>
                                         {{-- <a class="ms-2" href="{{route(currentUser().'.delivery_invoice',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-file-earmark-break"></i>
                                         </a> --}}
@@ -95,7 +95,7 @@
                                             <a class="ms-2" href="javascript:void()" onclick="showConfirmation({{$p->id}})">
                                                 <i class="bi bi-trash" style='color:red'></i>
                                             </a>
-                                            <a class="ms-2" href="{{route(currentUser().'.sales.sales_update',encryptor('encrypt',$p->id))}}">
+                                            <a class="ms-2" href="{{route(currentUser().'.sales.primary_update',encryptor('encrypt',$p->id))}}">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                         @endif
