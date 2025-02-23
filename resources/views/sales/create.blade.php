@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Sales Create'))
+@section('pageTitle',trans('নতুন বিক্রয়'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
