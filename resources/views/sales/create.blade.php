@@ -56,14 +56,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
-                                        <label for="product_pcs">{{__('পিস')}}</label>
-                                        <input type="number" placeholder="পিস" min="0" step="0.01" class="form-control product_pcs" value="{{ old('product_pcs')}}" name="product_pcs">
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="form-group">
-                                        <label for=""><b>product</b></label>
+                                        <label for=""><b>পন্য নির্বাচন</b></label>
                                         <select class="form-control form-select product_id select2" id="product_id" name="product_id" onchange="getproductData(this);">
                                             <option value="">Select Product</option>
                                             @forelse ($product as $p)
@@ -77,8 +70,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
-                                        <label for="product_price">{{__('দর')}}</label>
-                                        <input type="number" onkeyup="TotalPriceCount(this);" onchange="TotalPriceCount(this);" placeholder="দর" min="0" step="0.01" class="form-control product_price" value="{{ old('product_price')}}" name="product_price">
+                                        <label for="product_pcs">{{__('পিস')}}</label>
+                                        <input type="number" placeholder="পিস" min="0" step="0.01" class="form-control product_pcs" value="{{ old('product_pcs')}}" name="product_pcs">
 
                                     </div>
                                 </div>
@@ -92,6 +85,13 @@
                                     <div class="form-group">
                                         <label for="gm">{{__('গ্রাম')}}</label>
                                         <input type="number" onkeyup="TotalPriceCount(this);" onchange="TotalPriceCount(this);" placeholder="গ্রাম" min="0" step="0.01" class="form-control gm" value="{{ old('gm')}}" name="gm">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="product_price">{{__('দর')}}</label>
+                                        <input type="number" onkeyup="TotalPriceCount(this);" onchange="TotalPriceCount(this);" placeholder="দর" min="0" step="0.01" class="form-control product_price" value="{{ old('product_price')}}" name="product_price">
+
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
