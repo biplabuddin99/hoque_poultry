@@ -77,9 +77,9 @@
                                     <td>{{ $p->shop?->shop_name }}</td>
                                     <td>{{$p->product?->product_name}}</td>
                                     <td>{{$p->product_pcs}}</td>
-                                    <td>{{$p->product_price}}</td>
                                     <td>{{$p->kg}}</td>
                                     <td>{{$p->gm}}</td>
+                                    <td>{{$p->product_price}}</td>
                                     <td>{{$p->total}}</td>
                                     <td class="white-space-nowrap">
                                         {{-- <a class="ms-2" href="{{route(currentUser().'.sales.receiveScreen',encryptor('encrypt',$p->id))}}">
