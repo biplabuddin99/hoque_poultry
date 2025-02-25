@@ -79,7 +79,9 @@
                                     <td>{{$p->product_pcs}}</td>
                                     <td>{{$p->kg}}</td>
                                     <td>{{$p->gm}}</td>
-                                    <td>{{$p->product_price}}</td>
+                                    <td>{{$p->product_price}}
+                                        <input type="hidden" value="{{$p->total}}" class="final_total">
+                                    </td>
                                     <td>{{$p->total}}</td>
                                     <td class="white-space-nowrap">
                                         {{-- <a class="ms-2" href="{{route(currentUser().'.sales.receiveScreen',encryptor('encrypt',$p->id))}}">
@@ -110,6 +112,13 @@
                                     <th colspan="11" class="text-center">No Data Found</th>
                                 </tr>
                                 @endforelse
+                                <tr>
+                                    <th colspan="8" class="text-end">Total</th>
+                                    <th>
+                                        <span class="sumFinalTotal"></span>
+                                        {{--  <input type="text" value="" class="sumFinalTotal_f">  --}}
+                                    </th>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -129,5 +138,16 @@
         }
     }
 </script>
+<script>
+    total_calculate();
 
+    function total_calculate() {
+        var finalTotal = 0;
+        $('.final_total').each(function() {
+            finalTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.sumFinalTotal').text(parseFloat(finalTotal).toFixed(2));
+        $('.sumFinalTotal_f').val(parseFloat(subtotal).toFixed(2));
+    }
+</script>
 @endsection
