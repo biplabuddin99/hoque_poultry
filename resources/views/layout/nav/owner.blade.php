@@ -49,12 +49,12 @@
 		</ul>
     </li> --}}
     <li class="sidebar-item has-sub">
-        <a href="#" class='sidebar-link'><i class="bi bi-boxes"></i><span>{{__('Sales')}}</span>
+        <a href="#" class='sidebar-link'><i class="bi bi-boxes"></i><span>{{__('সেল পার্ট')}}</span>
         </a>
         <ul class="submenu">
-            <li class="py-1 submenu-item"><a href="{{route(currentUser().'.shop.index')}}">{{__('Shop')}}</a></li>
-            <li class="py-1 submenu-item"><a href="{{route(currentUser().'.customer.index')}}">{{__('Customers')}}</a></li>
-            <li class="py-1 submenu-item"><a href="{{route(currentUser().'.product.index')}}" >{{__('Product')}}</a></li>
+            <li class="py-1 submenu-item"><a href="{{route(currentUser().'.shop.index')}}">{{__('সেল সেন্টার')}}</a></li>
+            {{-- <li class="py-1 submenu-item"><a href="{{route(currentUser().'.customer.index')}}">{{__('Customers')}}</a></li> --}}
+            <li class="py-1 submenu-item"><a href="{{route(currentUser().'.product.index')}}" >{{__('পন্য')}}</a></li>
             {{-- <li class="py-1 submenu-item"><a href="{{route(currentUser().'.sales.create')}}" >{{__('New Sales')}}</a></li> --}}
             <li class="py-1 submenu-item"><a href="{{route(currentUser().'.sales.create')}}" >{{__('নতুন বিক্রয়')}}</a></li>
             <li class="py-1 submenu-item"><a href="{{route(currentUser().'.sales.index')}}" >{{__('বিক্রয় তালিকা')}}</a></li>
