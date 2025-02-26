@@ -29,8 +29,8 @@
                                     </div> --}}
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="product_name">{{__('Product Name')}}</label>
-                                            <input type="text" class="form-control" value="{{ old('product_name',$product->product_name)}}" name="product_name">
+                                            <label for="product_name">{{__('পণ্যের নাম')}}</label>
+                                            <input type="text" placeholder="পণ্যের নাম" class="form-control" value="{{ old('product_name',$product->product_name)}}" name="product_name">
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-4 col-md-6 col-sm-12">
@@ -80,8 +80,8 @@
                                     </div> --}}
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="tp_price">{{__('Price')}}</label>
-                                            <input type="number" min="0" step="0.01" class="form-control tp_price" value="{{ old('tp_price',$product->tp_price)}}" name="tp_price">
+                                            <label for="tp_price">{{__('দর')}}</label>
+                                            <input type="number" min="0" step="0.01" class="form-control tp_price" value="{{ old('tp_price',$product->tp_price)}}" name="tp_price" placeholder="দর">
                                         </div>
                                     </div>
                                     {{-- <div class="col-lg-4 col-md-6 col-sm-12">
