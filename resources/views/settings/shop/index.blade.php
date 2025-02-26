@@ -105,7 +105,10 @@
                             </tr>
                         </thead>
                         <tbody>
+
                             @forelse($shop as $data)
+                            {{-- in=1 মানে টাকা কালেকশন বা জমা . out=0 মানে বকেয়া দেয়া --}}
+                            @php $balance=$data->shopBalances?->where('status',0)->sum('balance_amount') - $data->shopBalances?->where('status',1)->sum('balance_amount')@endphp
                             {{-- @php $shopbalance=($data->shopBalances?->where('status',0)->sum('balance_amount') + $data->shopBalances?->where('status',1)->where('check_type',1)->sum('balance_amount')) - ($data->shopBalances?->where('status',1)->sum('balance_amount') + $data->shopBalances?->where('status',0)->sum('collect_amount')) @endphp --}}
                             @php
                                 $oldDue=$data->shopBalances?->where('status',1)->sum('balance_amount');
@@ -122,12 +125,23 @@
                                 <td>{{$data->contact}}</td>
                                 {{-- <td>{{$data->dsr?->name}}</td> --}}
                                 {{-- <td>{{$data->area?->name}}</td> --}}
-                                <td>{{ $shopbalance }}</td>
+                                <td>{{ $balance }}</td>
                                 <td>{{$data->address}}</td>
                                 <td class="white-space-nowrap">
                                     <a href="{{route(currentUser().'.shop.edit',encryptor('encrypt',$data->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
+                                    <button class="btn btn-primary p-0 m-0" type="button" style="background-color: none; border:none;"
+                                    data-bs-toggle="modal" data-bs-target="#balance"
+                                    data-shop-name="{{$data->shop_name}}"
+                                    data-address="{{$data->address}}"
+                                    data-owner-name="{{$data->owner_name}}"
+                                    data-shop-id="{{$data->id}}"
+                                    data-balance="{{$balance}}"
+                                    <span class="text-primary">
+                                        {{-- <i class="bi bi-currency-dollar" style="font-size:1rem; color:rgb(49, 49, 245);"></i> --}}জমা
+                                    </span>
+                                </button>
                                     {{-- <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $data->id }})">
                                         <i class="bi bi-trash"></i>
                                     </a> --}}
@@ -148,6 +162,58 @@
                 <div class="my-3">
                     {!! $shop->withQueryString()->links()!!}
                 </div>
+                <div class="modal fade" id="balance" tabindex="-1" role="dialog"
+                aria-labelledby="balanceTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable"
+                    role="document">
+                    <form class="form" method="post" action="{{route(currentUser().'.shop.balance')}}">
+                        @csrf
+                        <div class="modal-content">
+                            <div class="modal-header py-1">
+                                <h5 class="modal-title" id="batchTitle">জমা টাকা
+                                </h5>
+                                <button type="button" class="close text-danger" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <i class="bi bi-x-lg" style="font-size: 1.5rem;"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr class="bg-light">
+                                            <th>সেল সেন্টার নাম:</th>
+                                            <td id="shopName"></td>
+                                        </tr>
+                                        <tr class="bg-light">
+                                            <th>মালিকের নাম:</th>
+                                            <td id="ownerName"></td>
+                                        </tr>
+                                        <tr class="bg-light">
+                                            <th>বর্তমান টাকা</th>
+                                            <td id="shopBalance"></td>
+                                        </tr>
+                                        <tr class="bg-light" style="display: none;">
+                                            <th>Customer ID</th>
+                                            <td><input type="hidden" value="" id="shopId" class="form-control" name="shop_id"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>জমা টাকা:</th>
+                                            <td ><input type="number" value="{{old('balance')}}" class="form-control" name="balance" placeholder="add balance"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>তারিখ:</th>
+                                            <td ><input type="text" id="datepicker" class="form-control" value="<?php print(date("m/d/Y")); ?>"  name="collect_date" placeholder="mm-dd-yyyy"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -160,5 +226,23 @@
             $('#form' + id).submit();
         }
     }
+</script>
+<script>
+    $(document).ready(function () {
+        $('#balance').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var shopName = button.data('shop-name');
+            var ownerName = button.data('owner-name');
+            var shopId = button.data('shop-id');
+            var balance = button.data('balance');
+
+            // Set the values in the modal
+            var modal = $(this);
+            modal.find('#shopName').text(shopName);
+            modal.find('#ownerName').text(ownerName);
+            modal.find('#shopId').val(shopId);
+            modal.find('#shopBalance').text(balance);
+        });
+    });
 </script>
 @endpush

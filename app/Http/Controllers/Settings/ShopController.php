@@ -44,6 +44,35 @@ class ShopController extends Controller
         return view('settings.shop.index',compact('shop','area','distributor','userSr'));
     }
 
+    public function shopBalance(Request $request)
+    {
+        try {
+            if ($request->balance > 0) {
+                $data = new ShopBalance;
+                $data->shop_id = $request->shop_id;
+                $data->created_at = now();
+                $data->balance_amount = $request->balance;
+                $data->date = date('Y-m-d', strtotime($request->collect_date));
+                //in=1 মানে টাকা কালেকশন বা জমা . out=0 মানে বকেয়া দেয়া
+                $data->status = 1;
+                $data->company_id = company()['company_id'];
+
+                if ($data->save()) {
+                    Toastr::success('সফলভাবে জমা নেয়া হয়েছে!');
+                    return redirect()->route(currentUser().'.shop.index');
+                } else {
+                    Toastr::warning('আবার চেষ্টা করুন!');
+                    return redirect()->back();
+                }
+            } else {
+                Toastr::warning('আপনি ০ এর চেয়ে বেশি টাকা দিতে হবে!');
+                return redirect()->back();
+            }
+        } catch (Exception $e) {
+            dd($e);
+            return back()->withInput();
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -87,6 +116,18 @@ class ShopController extends Controller
                 // return response()->json($shop);
             }else{
                 $shop->save();
+                if($request->balance > 0){
+                    $banance=new ShopBalance;
+                    $banance->shop_id= $shop->id;
+                    $banance->cash_type=0;
+                    $banance->date = now();
+                    $banance->balance_amount=$request->balance;
+                    $banance->company_id=company()['company_id'];
+                    // $banance->sr_id = $request->sr_id;
+                    //in=1 মানে টাকা কালেকশন বা জমা . out=0 মানে বকেয়া দেয়া
+                    $banance->status=0;
+                    $banance->save();
+                    }
                 Toastr::success('Create Successfully!');
                 return redirect()->route(currentUser().'.shop.index');
             }

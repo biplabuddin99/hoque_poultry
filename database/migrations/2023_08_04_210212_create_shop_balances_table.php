@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string('reference_number')->nullable();
             $table->integer('cash_type')->nullable()->comment('0=cash,1=check,2=bank,3=due');
             $table->integer('check_type')->nullable();
-            $table->date('check_date')->nullable();
+            $table->date('date')->nullable();
             $table->date('new_due_date')->nullable();
             $table->date('sr_id')->nullable();
-            $table->string('status')->comment('0=>out 1=>in')->nullable();
+            $table->string('status')->comment('0=>out 1=>in')->nullable();  //in=1 মানে টাকা কালেকশন বা জমা . out=0 মানে বকেয়া দেয়া
             // $table->string('status_history')->nullable()->comment('0=out,1=in');
             $table->unsignedBigInteger('company_id')->nullable();
             $table->timestamps();

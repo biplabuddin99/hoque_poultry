@@ -36,7 +36,7 @@ class SalesController extends Controller
     {
         $sales=TemporarySales::where('status',0)->where('sales_type',0)->where(company());
         $userSr=User::where(company())->where('role_id',5)->get();
-        $shops = Shop::where(company())->select('id','owner_name')->get();
+        $shops = Shop::where(company())->select('id','shop_name','owner_name')->get();
         $products = Product::where(company())->select('id','product_name')->get();
         if ($request->fdate) {
             $tdate = $request->tdate ?: $request->fdate;
@@ -144,6 +144,19 @@ class SalesController extends Controller
             $data->created_by= currentUserId();
             $data->save();
            if($data->save()){
+            if($request->total_taka){
+            $banance=new ShopBalance;
+            $banance->sales_id=$data->id;
+            $banance->shop_id= $request->shop_id;
+            $banance->cash_type=0;
+            $banance->date = date('Y-m-d', strtotime($request->sales_date));
+            $banance->balance_amount=$request->total_taka;
+            $banance->company_id=company()['company_id'];
+            $banance->sr_id = $request->sr_id;
+            //in=1 মানে টাকা কালেকশন বা জমা . out=0 মানে বকেয়া দেয়া
+            $banance->status=0;
+            $banance->save();
+            }
                 Toastr::success('Create Successfully!');
                 return redirect()->route(currentUser().'.sales.index');
             }else{

@@ -67,8 +67,8 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="balance">Opening Balance</label>
-                                        <input type="number" value="{{old('balance')}}" class="form-control border border-primary" name="balance">
+                                        <label for="balance">সাবেক মোট:</label>
+                                        <input type="number" value="{{old('balance')}}" class="form-control border border-primary" name="balance" placeholder=">সাবেক মোট">
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-6">

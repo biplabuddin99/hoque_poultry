@@ -110,6 +110,7 @@ Route::group(['middleware'=>isOwner::class],function(){
                 Route::post('sales-updatestore/{id}',[sales::class,'salesUpdateStore'])->name('owner.sales.salesUpdate');
                 //ajax call
                 Route::get('product-get',[sales::class,'getproduct'])->name('owner.getproduct');
+                Route::post('/shop/balance', [shop::class, 'shopBalance'])->name('owner.shop.balance');
 
         // settings
         // Route::resource('company',company::class,['as'=>'owner']);

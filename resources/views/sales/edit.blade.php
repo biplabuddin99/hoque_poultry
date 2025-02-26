@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
-                                        <label for=""><b>সেল সেন্টার</b></label>
+                                        <label for=""><b>সেল সেন্টার পাইকারদের নাম</b></label>
                                         <select class="form-control form-select shop_id select2" id="shop_id" name="shop_id">
                                             <option value="">Select</option>
                                             @forelse ($shops as $p)

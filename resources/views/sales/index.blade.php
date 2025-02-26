@@ -20,7 +20,7 @@
                                 <input type="date" id="tdate" class="form-control" value="{{ request('tdate')}}" name="tdate">
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12 py-1">
-                                <label for="lcNo">{{__('সেল সেন্টার')}}</label>
+                                <label for="lcNo">{{__('সেল সেন্টার মালিক')}}</label>
                                 <select name="shop_id" class="select2 form-select">
                                     <option value="">Select</option>
                                     @forelse ($shops as $d)
@@ -60,12 +60,13 @@
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">তারিখ</th>
                                     <th scope="col">সেল সেন্টার</th>
+                                    <th scope="col">{{__('মালিক')}}</th>
                                     <th scope="col">{{__('পন্য')}}</th>
                                     <th scope="col">{{__('পিস')}}</th>
                                     <th scope="col">{{__('কেজি')}}</th>
                                     <th scope="col">{{__('গ্রাম')}}</th>
                                     <th scope="col">{{__('দর')}}</th>
-                                    <th scope="col">{{__('মোট টাকা')}}</th>
+                                    <th scope="col">{{__('মোট দর')}}</th>
                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                 </tr>
                             </thead>
@@ -75,6 +76,7 @@
                                     <th scope="row">{{ $sales->firstItem() + $key }}</th>
                                     <td>{{$p->sales_date}}</td>
                                     <td>{{ $p->shop?->shop_name }}</td>
+                                    <td>{{ ($p->shop?->owner_name) }}</td>
                                     <td>{{$p->product?->product_name}}</td>
                                     <td>{{$p->product_pcs}}</td>
                                     <td>{{$p->kg}}</td>
@@ -113,7 +115,7 @@
                                 </tr>
                                 @endforelse
                                 <tr>
-                                    <th colspan="8" class="text-end">Total</th>
+                                    <th colspan="9" class="text-end">মোট টাকা </th>
                                     <th>
                                         <span class="sumFinalTotal"></span>
                                         {{--  <input type="text" value="" class="sumFinalTotal_f">  --}}
