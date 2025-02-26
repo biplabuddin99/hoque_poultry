@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle','দোকানের তালিকা')
+@section('pageTitle','সেল সেন্টার তালিকা')
 @section('pageSubTitle','List')
 
 @section('content')
