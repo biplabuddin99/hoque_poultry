@@ -34,7 +34,7 @@ class SalesController extends Controller
 
     public function index(Request $request)
     {
-        $sales=TemporarySales::where('status',0)->where('sales_type',0)->where(company());
+        $sales=TemporarySales::where('status',0)->where('sales_type',0)->where(company())->orderBy('sales_date');
         $userSr=User::where(company())->where('role_id',5)->get();
         $shops = Shop::where(company())->select('id','shop_name','owner_name')->get();
         $products = Product::where(company())->select('id','product_name')->get();
@@ -139,6 +139,7 @@ class SalesController extends Controller
             $data->sales_date = date('Y-m-d', strtotime($request->sales_date));
             // $data->memu_code = 'M-'.Carbon::now()->format('m-y').'-'. str_pad((TemporarySales::whereYear('created_at', Carbon::now()->year)->count() + 1),4,"0",STR_PAD_LEFT);
             $data->total = $request->total_taka;
+            $data->collect_tk = $request->collection_taka;
             $data->status = 0;
             $data->company_id=company()['company_id'];
             $data->created_by= currentUserId();
@@ -339,12 +340,14 @@ class SalesController extends Controller
             $data->sales_date = date('Y-m-d', strtotime($request->sales_date));
             // $data->memu_code = 'M-'.Carbon::now()->format('m-y').'-'. str_pad((TemporarySales::whereYear('created_at', Carbon::now()->year)->count() + 1),4,"0",STR_PAD_LEFT);
             $data->total = $request->total_taka;
+            $data->collect_tk = $request->collection_taka;
             $data->status = 0;
             $data->company_id=company()['company_id'];
             $data->created_by= currentUserId();
             $data->save();
            if($data->save()){
             if($request->total_taka > 0){
+                $dl=ShopBalance::where('sales_id',$data->id)->delete();
                 $salesdue=new ShopBalance;
                 $salesdue->sales_id=$data->id;
                 $salesdue->shop_id= $request->shop_id;
@@ -358,6 +361,7 @@ class SalesController extends Controller
                 $salesdue->save();
                 }
                 if($request->collection_taka> 0){
+                    // $d=ShopBalance::where('sales_id',$data->id)->delete();
                 $collection=new ShopBalance;
                 $collection->sales_id=$data->id;
                 $collection->shop_id= $request->shop_id;

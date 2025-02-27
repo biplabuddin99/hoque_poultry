@@ -67,6 +67,7 @@
                                     <th scope="col">{{__('গ্রাম')}}</th>
                                     <th scope="col">{{__('দর')}}</th>
                                     <th scope="col">{{__('মোট দর')}}</th>
+                                    <th scope="col">{{__('জমা')}}</th>
                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                 </tr>
                             </thead>
@@ -85,6 +86,7 @@
                                         <input type="hidden" value="{{$p->total}}" class="final_total">
                                     </td>
                                     <td>{{$p->total}}</td>
+                                    <td>{{$p->collect_tk}}</td>
                                     <td class="white-space-nowrap">
                                         {{-- <a class="ms-2" href="{{route(currentUser().'.sales.receiveScreen',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-receipt-cutoff"></i>
@@ -116,7 +118,7 @@
                                 @endforelse
                                 <tr>
                                     <th colspan="9" class="text-end">মোট টাকা </th>
-                                    <th>
+                                    <th colspan="3" class="text-start">
                                         <span class="sumFinalTotal"></span>
                                         {{--  <input type="text" value="" class="sumFinalTotal_f">  --}}
                                     </th>

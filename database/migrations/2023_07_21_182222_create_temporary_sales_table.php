@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('kg')->nullable();
             $table->integer('gm')->nullable();
             $table->decimal('total',14,2)->nullable();
+            $table->decimal('collect_tk',14,2)->nullable();
             $table->string('status')->default(0);
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
