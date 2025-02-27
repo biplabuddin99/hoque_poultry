@@ -102,6 +102,12 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
+                                        <label for="collection_taka">{{__('জমা টাকা')}}</label>
+                                        <input type="number" placeholder="জমা টাকা" min="0" step="0.01" class="form-control collection_taka" value="{{ old('collection_taka')}}" name="collection_taka">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
                                     </div>
                                 </div>
                             </div>

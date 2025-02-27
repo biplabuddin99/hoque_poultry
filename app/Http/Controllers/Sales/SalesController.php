@@ -145,17 +145,30 @@ class SalesController extends Controller
             $data->save();
            if($data->save()){
             if($request->total_taka){
-            $banance=new ShopBalance;
-            $banance->sales_id=$data->id;
-            $banance->shop_id= $request->shop_id;
-            $banance->cash_type=0;
-            $banance->date = date('Y-m-d', strtotime($request->sales_date));
-            $banance->balance_amount=$request->total_taka;
-            $banance->company_id=company()['company_id'];
-            $banance->sr_id = $request->sr_id;
+            $salesdue=new ShopBalance;
+            $salesdue->sales_id=$data->id;
+            $salesdue->shop_id= $request->shop_id;
+            $salesdue->cash_type=0;
+            $salesdue->date = date('Y-m-d', strtotime($request->sales_date));
+            $salesdue->balance_amount=$request->total_taka;
+            $salesdue->company_id=company()['company_id'];
+            $salesdue->sr_id = $request->sr_id;
             //in=1 মানে টাকা কালেকশন বা জমা . out=0 মানে বকেয়া দেয়া
-            $banance->status=0;
-            $banance->save();
+            $salesdue->status=0;
+            $salesdue->save();
+            }
+            if($request->collection_taka){
+            $collection=new ShopBalance;
+            $collection->sales_id=$data->id;
+            $collection->shop_id= $request->shop_id;
+            $collection->cash_type=0;
+            $collection->date = date('Y-m-d', strtotime($request->sales_date));
+            $collection->balance_amount=$request->collection_taka;
+            $collection->company_id=company()['company_id'];
+            $collection->sr_id = $request->sr_id;
+            //in=1 মানে টাকা কালেকশন বা জমা . out=0 মানে বকেয়া দেয়া
+            $collection->status=1;
+            $collection->save();
             }
                 Toastr::success('Create Successfully!');
                 return redirect()->route(currentUser().'.sales.index');
@@ -331,6 +344,32 @@ class SalesController extends Controller
             $data->created_by= currentUserId();
             $data->save();
            if($data->save()){
+            if($request->total_taka > 0){
+                $salesdue=new ShopBalance;
+                $salesdue->sales_id=$data->id;
+                $salesdue->shop_id= $request->shop_id;
+                $salesdue->cash_type=0;
+                $salesdue->date = date('Y-m-d', strtotime($request->sales_date));
+                $salesdue->balance_amount=$request->total_taka;
+                $salesdue->company_id=company()['company_id'];
+                $salesdue->sr_id = $request->sr_id;
+                //in=1 মানে টাকা কালেকশন বা জমা . out=0 মানে বকেয়া দেয়া
+                $salesdue->status=0;
+                $salesdue->save();
+                }
+                if($request->collection_taka> 0){
+                $collection=new ShopBalance;
+                $collection->sales_id=$data->id;
+                $collection->shop_id= $request->shop_id;
+                $collection->cash_type=0;
+                $collection->date = date('Y-m-d', strtotime($request->sales_date));
+                $collection->balance_amount=$request->collection_taka;
+                $collection->company_id=company()['company_id'];
+                $collection->sr_id = $request->sr_id;
+                //in=1 মানে টাকা কালেকশন বা জমা . out=0 মানে বকেয়া দেয়া
+                $collection->status=1;
+                $collection->save();
+                }
                 Toastr::success('Update Successfully!');
                 return redirect()->route(currentUser().'.sales.index');
             }else{
