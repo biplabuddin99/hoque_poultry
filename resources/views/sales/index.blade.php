@@ -75,7 +75,9 @@
                                 @forelse($sales as $key=>$p)
                                 <tr>
                                     <th scope="row">{{ $sales->firstItem() + $key }}</th>
-                                    <td>{{$p->sales_date}}</td>
+                                    {{-- <td>{{$p->sales_date}}</td> --}}
+                                    <td>{{ \Carbon\Carbon::parse($p->sales_date)->format('d/m/Y') }} </td>
+                                    {{-- <td>{{ $p->sales_date->format('j/n/Y') }}</td> --}}
                                     <td>{{ ($p->shop?->owner_name) }}</td>
                                     <td>{{ $p->shop?->address }}</td>
                                     <td>{{$p->product?->product_name}}</td>
