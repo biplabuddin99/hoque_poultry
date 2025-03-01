@@ -59,8 +59,8 @@
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">তারিখ</th>
-                                    <th scope="col">সেল সেন্টার</th>
                                     <th scope="col">{{__('মালিক')}}</th>
+                                    <th scope="col">{{__('ঠিকানা')}}</th>
                                     <th scope="col">{{__('পন্য')}}</th>
                                     <th scope="col">{{__('পিস')}}</th>
                                     <th scope="col">{{__('কেজি')}}</th>
@@ -76,8 +76,8 @@
                                 <tr>
                                     <th scope="row">{{ $sales->firstItem() + $key }}</th>
                                     <td>{{$p->sales_date}}</td>
-                                    <td>{{ $p->shop?->shop_name }}</td>
                                     <td>{{ ($p->shop?->owner_name) }}</td>
+                                    <td>{{ $p->shop?->address }}</td>
                                     <td>{{$p->product?->product_name}}</td>
                                     <td>{{$p->product_pcs}}</td>
                                     <td>{{$p->kg}}</td>
