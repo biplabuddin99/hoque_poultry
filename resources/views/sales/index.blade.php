@@ -86,7 +86,9 @@
                                         <input type="hidden" value="{{$p->total}}" class="final_total">
                                     </td>
                                     <td>{{$p->total}}</td>
-                                    <td>{{$p->collect_tk}}</td>
+                                    <td class="text-danger">{{$p->collect_tk}}
+                                        <input type="hidden" value="{{$p->collect_tk}}" class="collect_tk">
+                                    </td>
                                     <td class="white-space-nowrap">
                                         {{-- <a class="ms-2" href="{{route(currentUser().'.sales.receiveScreen',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-receipt-cutoff"></i>
@@ -118,8 +120,12 @@
                                 @endforelse
                                 <tr>
                                     <th colspan="9" class="text-end">মোট টাকা </th>
-                                    <th colspan="3" class="text-start">
+                                    <th class="text-start">
                                         <span class="sumFinalTotal"></span>
+                                         <input type="hidden" value="" class="sumFinalTotal_f">
+                                    </th>
+                                    <th colspan="2" class="text-start">
+                                        <span class="sumfinalCollection text-danger"></span>
                                         {{--  <input type="text" value="" class="sumFinalTotal_f">  --}}
                                     </th>
                                 </tr>
@@ -144,14 +150,27 @@
 </script>
 <script>
     total_calculate();
+    total_callection();
 
     function total_calculate() {
         var finalTotal = 0;
         $('.final_total').each(function() {
             finalTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
-        $('.sumFinalTotal').text(parseFloat(finalTotal).toFixed(2));
-        $('.sumFinalTotal_f').val(parseFloat(subtotal).toFixed(2));
+        // $('.sumFinalTotal').text(parseFloat(finalTotal).toFixed(2));
+        $('.sumFinalTotal_f').val(parseFloat(finalTotal).toFixed(2));
+    }
+    function total_callection() {
+        var finalCollection = 0;
+        $('.collect_tk').each(function() {
+            finalCollection+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        var finalTota=$('.sumFinalTotal_f').val();
+        var margetotal= parseFloat(finalTota).toFixed(2) - finalCollection;
+        $('.sumFinalTotal').text(parseFloat(margetotal).toFixed(2));
+        console.log(margetotal);
+        $('.sumfinalCollection').text(parseFloat(finalCollection).toFixed(2));
+        // $('.sumfinalCollection_f').val(parseFloat(subtotal).toFixed(2));
     }
 </script>
 @endsection
