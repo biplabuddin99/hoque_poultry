@@ -34,7 +34,7 @@ class SalesController extends Controller
 
     public function index(Request $request)
     {
-        $sales=TemporarySales::where('status',0)->where('sales_type',0)->where(company())->orderBy('sales_date');
+        $sales=TemporarySales::where('status',0)->where('sales_type',0)->where(company())->orderBy('sales_date','desc');
         $userSr=User::where(company())->where('role_id',5)->get();
         $shops = Shop::where(company())->select('id','shop_name','owner_name')->get();
         $products = Product::where(company())->select('id','product_name')->get();
