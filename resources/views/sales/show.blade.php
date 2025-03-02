@@ -54,7 +54,7 @@
                                             <th scope="col">{{__('Sub-Total')}}</th>
                                         </tr>
                                     </thead>
-                                    @php 
+                                    @php
                                         $sl = 0;
                                     @endphp
                                     <tbody id="sales_repeat">

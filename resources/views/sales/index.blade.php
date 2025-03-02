@@ -56,7 +56,7 @@
                         <a class="float-end" href="{{route(currentUser().'.sales.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                         <table class="table table-bordered mb-0 table-striped">
                             <thead>
-                                <tr>
+                                <tr class="bg-primary text-white">
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">তারিখ</th>
                                     <th scope="col">{{__('মালিক')}}</th>
@@ -87,7 +87,7 @@
                                     <td>{{$p->product_price}}
                                         <input type="hidden" value="{{$p->total}}" class="final_total">
                                     </td>
-                                    <td>{{$p->total}}</td>
+                                    <td class="text-primary">{{$p->total}}</td>
                                     <td class="text-danger">{{$p->collect_tk}}
                                         <input type="hidden" value="{{$p->collect_tk}}" class="collect_tk">
                                     </td>
@@ -120,14 +120,14 @@
                                     <th colspan="11" class="text-center">No Data Found</th>
                                 </tr>
                                 @endforelse
-                                <tr>
+                                <tr class="bg-primary text-white">
                                     <th colspan="9" class="text-end">মোট টাকা </th>
                                     <th class="text-start">
                                         <span class="sumFinalTotal"></span>
                                          <input type="hidden" value="" class="sumFinalTotal_f">
                                     </th>
                                     <th colspan="2" class="text-start">
-                                        <span class="sumfinalCollection text-danger"></span>
+                                        <span class="sumfinalCollection"></span>
                                         {{--  <input type="text" value="" class="sumFinalTotal_f">  --}}
                                     </th>
                                 </tr>
