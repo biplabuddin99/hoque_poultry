@@ -120,7 +120,7 @@
                                     <th colspan="11" class="text-center">No Data Found</th>
                                 </tr>
                                 @endforelse
-                                <tr class="bg-primary text-white">
+                                <tr class="bg-primary text-white" style="background-color: #007bff !important; color: white !important;">
                                     <th colspan="9" class="text-end">মোট টাকা </th>
                                     <th class="text-start">
                                         <span class="sumFinalTotal"></span>
