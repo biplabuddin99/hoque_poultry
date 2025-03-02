@@ -120,7 +120,7 @@
                                     <th colspan="11" class="text-center">No Data Found</th>
                                 </tr>
                                 @endforelse
-                                <tr class="bg-primary text-white" style="background-color: #007bff !important; color: white !important;">
+                                {{-- <tr class="bg-primary text-white" style="background-color: #328ef0 !important; color: white !important;">
                                     <th colspan="9" class="text-end">মোট টাকা </th>
                                     <th class="text-start">
                                         <span class="sumFinalTotal"></span>
@@ -128,10 +128,22 @@
                                     </th>
                                     <th colspan="2" class="text-start">
                                         <span class="sumfinalCollection"></span>
-                                        {{--  <input type="text" value="" class="sumFinalTotal_f">  --}}
+                                    </th>
+                                </tr> --}}
+                            </tbody>
+                            <tfoot>
+                                <tr class="bg-primary text-white">
+                                    <th colspan="9" class="text-end">মোট টাকা</th>
+                                    <th class="text-start">
+                                        <span class="sumFinalTotal"></span>
+                                        <input type="hidden" value="" class="sumFinalTotal_f">
+                                    </th>
+                                    <th colspan="2" class="text-start">
+                                        <span class="sumfinalCollection"></span>
                                     </th>
                                 </tr>
-                            </tbody>
+                            </tfoot>
+
                         </table>
                     </div>
                     <div class="my-3">
