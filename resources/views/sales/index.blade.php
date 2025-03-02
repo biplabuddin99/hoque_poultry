@@ -61,7 +61,7 @@
                                     <th scope="col">তারিখ</th>
                                     <th scope="col">{{__('মালিক')}}</th>
                                     <th scope="col">{{__('ঠিকানা')}}</th>
-                                    <th scope="col">{{__('পন্য')}}</th>
+                                    <th scope="col" class="text-center">{{__('পন্য')}}</th>
                                     <th scope="col">{{__('পিস')}}</th>
                                     <th scope="col">{{__('কেজি')}}</th>
                                     <th scope="col">{{__('গ্রাম')}}</th>
@@ -72,6 +72,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                function generateHexColor($name) {
+                                    if (!$name) return '#B8B8B8'; // Default color for null values
+                                    $hash = md5($name); // Hash the product name
+                                    return '#' . substr($hash, 0, 6); // Extract first 6 hex characters
+                                }
+                            @endphp
                                 @forelse($sales as $key=>$p)
                                 <tr>
                                     <th scope="row">{{ $sales->firstItem() + $key }}</th>
@@ -80,7 +87,7 @@
                                     {{-- <td>{{ $p->sales_date->format('j/n/Y') }}</td> --}}
                                     <td>{{ ($p->shop?->owner_name) }}</td>
                                     <td>{{ $p->shop?->address }}</td>
-                                    <td>{{$p->product?->product_name}}</td>
+                                    <td class="text-center" class="text-center" style="color: {{ generateHexColor($p->product?->product_name) }}; border-radius: 15px; overflow: hidden;">{{$p->product?->product_name}}</td>
                                     <td>{{$p->product_pcs}}</td>
                                     <td>{{$p->kg}}</td>
                                     <td>{{$p->gm}}</td>
